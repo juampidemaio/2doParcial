@@ -74,48 +74,55 @@ export class RegistroEspecialistaComponent {
   }
 
   // Registrar especialista
- // Al guardar el especialista
  async guardarEspecialista(): Promise<void> {
   if (this.especialistaForm.valid) {
-    const { especialidad, nuevaEspecialidad } = this.especialistaForm.value;
+      Swal.fire({
+          title: 'Cargando...',
+          text: 'Por favor, espera un momento.',
+          allowOutsideClick: false,
+      });
 
-    const especialidadFinal = especialidad || nuevaEspecialidad;
+      Swal.showLoading(); 
 
-    if (!especialidadFinal) {
-      Swal.fire('Error', 'Debes seleccionar una especialidad o ingresar una nueva.', 'error');
-      return;
-    }
+      const { especialidad, nuevaEspecialidad } = this.especialistaForm.value;
+      const especialidadFinal = especialidad || nuevaEspecialidad;
 
-    const imagenesArray = this.especialistaForm.get('imagenes') as FormArray;
-    if (imagenesArray.length !== 1) {
-      Swal.fire('Error', 'Debes subir exactamente 1 imagen.', 'error');
-      return;
-    }
+      if (!especialidadFinal) {
+          Swal.fire('Error', 'Debes seleccionar una especialidad o ingresar una nueva.', 'error');
+          return;
+      }
 
-    const file = imagenesArray.at(0).value; // Obtén el archivo desde el FormArray
-    try {
-      const imageUrl = await this.authService.uploadImage(file); // Sube la imagen y obtiene la URL
+      const imagenesArray = this.especialistaForm.get('imagenes') as FormArray;
+      if (imagenesArray.length !== 1) {
+          Swal.fire('Error', 'Debes subir exactamente 1 imagen.', 'error');
+          return;
+      }
 
-      // Crear los datos del usuario sin el archivo 'File'
-      const userData = { 
-        ...this.especialistaForm.value, 
-        especialidad: especialidadFinal, 
-        role: 'especialista',
-        imageUrl // Guardar solo la URL de la imagen
-      };
-      delete userData.imagenes; // Eliminar el campo de imágenes que contiene el archivo
+      const file = imagenesArray.at(0).value; 
+      try {
+          const imageUrl = await this.authService.uploadImage(file); 
+          const userData = { 
+              ...this.especialistaForm.value, 
+              especialidad: especialidadFinal, 
+              role: 'especialista',
+              imageUrl 
+          };
+          delete userData.imagenes; 
+
+          await this.authService.registerUser(userData.email, userData.password, userData, 'especialista');
+
+          Swal.fire('Registro exitoso', 'El especialista ha sido registrado correctamente', 'success');
+          this.router.navigate(['/bienvenida']);
+      } catch (error) {
+          Swal.fire('Error', `Ha ocurrido un error durante la subida de la imagen: ${error}`, 'error');
+      } finally {
+          Swal.close();
+      }
       
-      await this.authService.registerUser(userData.email, userData.password, userData, 'especialista');
-      
-      Swal.fire('Registro exitoso', 'El especialista ha sido registrado correctamente', 'success');
-      this.router.navigate(['/bienvenida']);
-    } catch (error) {
-      Swal.fire('Error', `Ha ocurrido un error durante la subida de la imagen: ${error}`, 'error');
-    }
-    
   } else {
-    Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
+      Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
   }
 }
+
 
 }

@@ -21,6 +21,7 @@ export class RegistroComponent {
       }
     });
   }
+  
 
   cambiarTipoUsuario(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;

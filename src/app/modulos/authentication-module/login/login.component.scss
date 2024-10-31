@@ -1,76 +1,91 @@
-/* Estilo para la superposición (overlay) */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Oswald', sans-serif;
+  background-color: #2a2a2a; /* Fondo oscuro */
+}
+
 .overlay {
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
-    position: fixed; /* Fijar la superposición */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999; /* Asegurarse de que esté por encima de otros elementos */
-  }
-  
-  /* Estilo para la tarjeta del formulario */
-  .card {
-    background-color: #ffffff; /* Fondo blanco para la tarjeta */
-    border-radius: 20px; /* Bordes redondeados */
-  }
-  
-  /* Título del formulario */
-  h1 {
-    color: #343a40; /* Color oscuro para el texto */
-  }
-  
-  /* Estilo para el texto de olvido de contraseña */
-  #olvido-contrasena {
-    color: #007bff; /* Color azul */
-    font-weight: bold; /* Negrita */
-    cursor: pointer; /* Cambiar cursor al pasar sobre el texto */
-  }
-  
-  /* Efecto hover para el texto de olvido de contraseña */
-  #olvido-contrasena:hover {
-    text-decoration: underline; /* Subrayar al pasar el mouse */
-  }
-  
-  /* Estilo para los botones de acceso rápido */
-  .quick-access-btn {
-    background-color: #f8c74a; /* Color de fondo para botones */
-    color: #fff; /* Color del texto en blanco */
-    border: none; /* Sin borde */
-    border-radius: 20px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
-  }
-  
-  /* Efecto hover para los botones de acceso rápido */
-  .quick-access-btn:hover {
-    background-color: #e0b034; /* Color más oscuro al pasar el mouse */
-  }
-  
-  /* Estilo para el botón de inicio de sesión */
-  .btn-warning {
-    background-color: #ffc107; /* Color de fondo amarillo */
-    color: #fff; /* Color del texto en blanco */
-    border: none; /* Sin borde */
-    border-radius: 20px; /* Bordes redondeados */
-    padding: 12px 20px; /* Espaciado interno */
-    font-weight: bold; /* Texto en negrita */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
-  }
-  
-  /* Efecto hover para el botón de inicio de sesión */
-  .btn-warning:hover {
-    background-color: #e0a800; /* Color más oscuro al pasar el mouse */
-  }
-  
-  /* Estilo para el enlace de registro */
-  #registrarse {
-    color: #007bff; /* Color azul */
-    cursor: pointer; /* Cambiar cursor al pasar sobre el texto */
-  }
-  
-  /* Efecto hover para el enlace de registro */
-  #registrarse:hover {
-    text-decoration: underline; /* Subrayar al pasar el mouse */
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1; 
+}
+
+.card {
+  background-color: rgba(183, 244, 249, 0.9); /* Color de fondo más visible */
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  border-radius: 20px;
+  padding: 40px; /* Mayor padding para el contenido */
+  width: 450px; 
+  max-width: 90%; 
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px; /* Espacio entre el título y los campos */
+  text-align: center; /* Centrar el texto del título */
+}
+
+.form-control {
+  padding: 15px; 
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5); 
+}
+
+label {
+  margin-bottom: 5px; 
+  font-weight: bold;
+  display: block; 
+}
+
+#registrarse, #olvido-contrasena {
+  margin: 5px 0;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+#registrarse:hover, #olvido-contrasena:hover {
+  color: #ffcc00;
+  cursor: pointer;
+}
+
+span {
+  font-weight: bold;
+}
+
+button {
+  background-color: #ffcc00; 
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-weight: bold; 
+  border: none;
+  transition: all 0.3s ease; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin: 10px; /* Separación entre botones */
+}
+
+button:hover {
+  background-color: #ffcc0083; 
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+button:focus {
+  outline: none;
+}

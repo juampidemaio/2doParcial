@@ -80,6 +80,14 @@ export class RegistroPacienteComponent {
         Swal.fire('Error', 'Debes subir exactamente 2 imágenes.', 'error');
         return;
       }
+       Swal.fire({
+        title: 'Cargando...',
+        text: 'Por favor, espera un momento.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
 
       try {
         // Subir las imágenes a Firebase Storage
@@ -104,6 +112,9 @@ export class RegistroPacienteComponent {
         this.router.navigate(['/bienvenida']);
       } catch (error) {
         Swal.fire('Error', `Ha ocurrido un error durante el registro: ${error}`, 'error');
+      }
+      finally {
+        Swal.close(); // Cierra el loading al final
       }
     } else {
       Swal.fire('Formulario inválido', 'Por favor, completa todos los campos correctamente.', 'warning');

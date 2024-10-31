@@ -10,8 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class ListadoUsuariosComponent {
   @Output() usuarioSeleccionado = new EventEmitter<any>();
-  usuarios: any[] = []; // Array para almacenar los usuarios
-  loading: boolean = true; // Para mostrar un indicador de carga
+  usuarios: any[] = []; 
 
   constructor(private authService: AuthenticationService) {}
 
@@ -22,9 +21,19 @@ export class ListadoUsuariosComponent {
   seleccionarUsuario(usuario: any) {
     this.usuarioSeleccionado.emit(usuario); // Emitir el usuario seleccionado
   }
-
   async cargarUsuarios() {
     try {
+      Swal.fire({
+        title: 'Cargando usuarios...',
+        html: 'Por favor, espere un momento...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      // Recuperar usuarios
       this.usuarios = await this.authService.obtenerUsuarios();
     } catch (error) {
       console.error('Error al cargar usuarios:', error);
@@ -34,9 +43,10 @@ export class ListadoUsuariosComponent {
         text: 'Error al cargar usuarios.',
       });
     } finally {
-      this.loading = false; // Detenemos el indicador de carga
+      Swal.close(); // Cierra el modal de carga
     }
   }
+
 
   async habilitarUsuario(usuario: any) {
     if (usuario.habilitado) {
@@ -89,6 +99,6 @@ export class ListadoUsuariosComponent {
       title: 'Éxito',
       text: 'El usuario ha sido inhabilitado correctamente.',
     });
-    await this.cargarUsuarios(); // Recargar la lista
+    await this.cargarUsuarios(); 
   }
 }

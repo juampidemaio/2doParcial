@@ -50,7 +50,6 @@ export class RegistroAdminComponent {
         return;
       }
 
-      // Si la validación es exitosa y solo se permite una imagen
       if (imagenesArray.length < 1) {
         imagenesArray.push(this.fb.control(file));
       } else {
@@ -62,7 +61,7 @@ export class RegistroAdminComponent {
   // Método para subir la imagen a Firebase Storage
   async uploadImage(file: File): Promise<string> {
     try {
-      const downloadURL = await this.authService.uploadImage(file); // Utiliza el servicio de autenticación para subir la imagen y obtener la URL
+      const downloadURL = await this.authService.uploadImage(file); 
       return downloadURL;
     } catch (error) {
       console.error('Error al subir la imagen:', error);
@@ -71,7 +70,6 @@ export class RegistroAdminComponent {
     }
   }
 
-  // Mostrar errores de validación
   mostrarError(campo: string, error: string): boolean {
     const control = this.adminForm.get(campo);
     return control ? control.hasError(error) && (control.dirty || control.touched) : false;
@@ -85,36 +83,43 @@ export class RegistroAdminComponent {
         Swal.fire('Error', 'Debes subir exactamente 1 imagen.', 'error');
         return;
       }
-  
+
       // Obtener el archivo de imagen
       const file = imagenesArray.at(0).value as File;
-  
+
+      // Muestra el loading con SweetAlert2
+      Swal.fire({
+        title: 'Cargando...',
+        text: 'Por favor, espera un momento.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading(); // Muestra el spinner de carga
+        }
+      });
+
       try {
-        // Subir la imagen y obtener la URL
         const imageUrl = await this.uploadImage(file);
-        
-        // Crear el objeto de datos del usuario con la URL de la imagen
+
         const userData = { 
           ...this.adminForm.value, 
           role: 'administrador', 
-          imageUrl // Guardar la URL de la imagen en lugar del archivo
+          imageUrl 
         };
-  
-        // Eliminar la propiedad 'imagenes' antes de guardar
+
         delete userData.imagenes;
-  
-        // Registrar el administrador
-        await this.authService.registerUser(userData.email, userData.password, userData, "administrador"); // Asegúrate de que esta función maneje correctamente los datos.
-  
+
+        await this.authService.registerUser(userData.email, userData.password, userData, "administrador"); 
+
         Swal.fire('Registro exitoso', 'El administrador ha sido registrado correctamente', 'success');
         this.adminForm.reset();
         this.router.navigate(['/home']);
       } catch (error) {
         Swal.fire('Error', 'Ha ocurrido un error durante el registro', 'error');
+      } finally {
+        Swal.close(); // Cierra el loading al final
       }
     } else {
       Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
     }
   }
-  
 }
