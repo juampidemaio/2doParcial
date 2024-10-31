@@ -1,0 +1,4 @@
+<h2> Bienvenido a la seccion de Usuarios</h2>
+<app-registro></app-registro>
+<app-listado-usuarios (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-usuarios>
+<app-detalle-usuarios *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalle-usuarios>

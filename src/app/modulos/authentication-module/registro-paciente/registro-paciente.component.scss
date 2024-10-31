@@ -1,0 +1,76 @@
+/* Estilo general del formulario */
+form {
+  max-width: 600px; /* Ancho máximo del formulario */
+  margin: 20px auto; /* Centrar el formulario en la página */
+  padding: 20px; /* Espaciado interno */
+  border: 1px solid #ced4da; /* Borde gris claro */
+  border-radius: 10px; /* Bordes redondeados */
+  background-color: #f8f9fa; /* Fondo gris claro */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Estilo para las etiquetas */
+label {
+  font-weight: bold; /* Negrita para el texto de las etiquetas */
+  margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+  display: block; /* Hacer que la etiqueta ocupe toda la línea */
+  color: #495057; /* Color del texto */
+}
+
+/* Estilo para los inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ced4da; /* Borde gris claro */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  margin-bottom: 10px; /* Espacio debajo de los inputs */
+  outline: none; /* Sin borde de enfoque */
+  transition: border-color 0.3s; /* Transición suave para el borde */
+}
+
+/* Efecto al hacer foco en los inputs */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  border-color: #007bff; /* Color del borde cuando está enfocado */
+}
+
+/* Estilo para el input de archivo */
+input[type="file"] {
+  margin-bottom: 10px; /* Espacio debajo del input de archivo */
+}
+
+/* Estilo para los mensajes de error */
+div.ng-invalid.ng-touched {
+  color: #dc3545; /* Color rojo para los mensajes de error */
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+}
+
+/* Estilo para el botón de envío */
+button[type="submit"] {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  background-color: #28a745; /* Color de fondo del botón */
+  color: #fff; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  font-weight: bold; /* Negrita para el texto */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+  transition: background-color 0.3s; /* Transición suave para el fondo */
+}
+
+/* Efecto hover para el botón de envío */
+button[type="submit"]:hover {
+  background-color: #218838; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo para el contenedor de cada campo */
+div {
+  margin-bottom: 15px; /* Espacio entre campos */
+}

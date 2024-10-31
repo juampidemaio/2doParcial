@@ -1,0 +1,58 @@
+/* Estilo general para el contenedor del registro */
+h2 {
+    color: #343a40; /* Color del texto en el encabezado */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+/* Estilo para la etiqueta del selector de tipo de usuario */
+label {
+    font-weight: bold; /* Negrita para el texto de las etiquetas */
+    margin-bottom: 10px; /* Espacio debajo de las etiquetas */
+    display: block; /* Hacer que la etiqueta ocupe toda la línea */
+}
+
+/* Estilo para el selector de tipo de usuario */
+select {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ced4da; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espacio debajo del selector */
+    outline: none; /* Sin borde de enfoque */
+    transition: border-color 0.3s; /* Transición suave para el borde */
+}
+
+/* Efecto al hacer foco en el selector */
+select:focus {
+    border-color: #007bff; /* Color del borde cuando está enfocado */
+}
+
+/* Estilo para los componentes de registro específicos */
+app-registro-especialista,
+app-registro-paciente,
+app-registro-admin {
+    border: 1px solid #e9ecef; /* Borde gris claro alrededor de los componentes */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin-top: 20px; /* Espacio arriba del componente */
+    background-color: #f8f9fa; /* Fondo gris claro */
+}
+
+/* Estilo para el texto del enlace de iniciar sesión */
+#iniciar-sesion {
+    color: #007bff; /* Color azul */
+    font-weight: bold; /* Negrita */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el texto */
+}
+
+/* Efecto hover para el enlace de iniciar sesión */
+#iniciar-sesion:hover {
+    text-decoration: underline; /* Subrayar al pasar el mouse */
+}
+
+/* Estilo para el contenedor de texto centrado */
+.text-center {
+    text-align: center; /* Centrar el texto */
+    margin-top: 20px; /* Espacio arriba */
+}

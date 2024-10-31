@@ -1,0 +1,111 @@
+/* Estilos generales de enlaces */
+a {
+    text-decoration: none;
+    color: black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: burlywood;
+    border-radius: 10px; /* Reduce el borde redondeado */
+    padding: 3px 8px; /* Reduce el padding */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+a:hover {
+    cursor: pointer;
+    background-color: rgb(230, 171, 94);
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Reduce el padding de la barra de navegación */
+    flex-wrap: wrap;
+}
+
+/* Estilos de los enlaces en la barra de navegación */
+.nav-link {
+    margin: 0 15px; /* Reduce el margen para evitar superposición */
+    font-size: 1em; /* Reduce el tamaño de fuente */
+}
+
+/* Enlaces a la derecha */
+.nav-links-derecha {
+    margin-left: auto;
+    display: flex;
+    gap: 20px; /* Reduce el espacio entre enlaces */
+}
+
+/* Estilos para usuarios normales */
+.nav-link-login, .nav-link-puntaje, .nav-link-logout, .nav-link-encuesta {
+    font-size: 1.2em; /* Reduce el tamaño de fuente */
+}
+
+/* Estilos para el administrador */
+.isAdmin .nav-link {
+    font-size: 0.9em; /* Tamaño más pequeño para el admin */
+    margin: 0 15px; /* Ajusta el margen para el admin */
+}
+
+.isAdmin .nav-links-derecha {
+    gap: 15px; /* Espacio reducido entre enlaces para admin */
+}
+
+/* Enlaces específicos */
+.nav-link-login, .nav-link-logout {
+    margin-right: 10px; /* Reduce el margen derecho */
+}
+
+/* Estilos específicos para el enlace de resultados de la encuesta */
+.nav-link-resultado {
+    font-size: 1em; /* Reduce el tamaño de fuente para resultados de encuesta */
+}
+
+/* Media Queries para Responsividad */
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Cambia a dirección vertical */
+        align-items: flex-start; /* Alinea los elementos a la izquierda */
+        padding: 10px; /* Reduce el padding en pantallas pequeñas */
+    }
+    
+    .nav-link {
+        margin: 5px 0; /* Espacio vertical entre los enlaces */
+        font-size: 0.9em; /* Reduce el tamaño de fuente */
+    }
+    
+    .nav-links-derecha {
+        flex-direction: column; /* Cambia a dirección vertical */
+        gap: 10px; /* Reduce el espacio entre enlaces */
+        margin-left: 0;
+    }
+}
+
+/* Media Query para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+    .nav-link {
+        font-size: 0.8em; /* Tamaño de fuente aún más pequeño */
+        margin: 3px 0;
+    }
+}
+
+/* Media Query para pantallas más grandes (a partir de 1400px) */
+@media (min-width: 1400px) {
+    .navbar {
+        padding: 20px; /* Aumenta el padding para pantallas grandes */
+    }
+
+    .nav-link {
+        font-size: 1.1em; /* Aumenta un poco el tamaño de fuente */
+        margin: 0 20px; /* Aumenta el margen para separarlos más */
+    }
+
+    .nav-links-derecha {
+        gap: 30px; /* Aumenta el espacio entre enlaces en la sección derecha */
+    }
+
+    .nav-link-login, .nav-link-logout, .nav-link-puntaje, .nav-link-encuesta {
+        font-size: 1.2em; /* Aumenta ligeramente el tamaño de fuente para enlaces en la sección derecha */
+    }
+}

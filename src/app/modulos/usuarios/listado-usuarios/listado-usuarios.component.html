@@ -1,0 +1,26 @@
+<h2>Listado de Usuarios</h2>
+
+<div *ngIf="loading">Cargando usuarios...</div>
+<table *ngIf="!loading">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Rol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios" (click)="seleccionarUsuario(usuario)">
+      <td>{{ usuario.nombre }}</td>
+      <td>{{ usuario.apellido }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>{{ usuario.role }}</td>
+      <td>{{ usuario.habilitado ? 'Habilitado' : 'Inhabilitado' }}</td>
+      <td>
+        <button *ngIf="usuario.role === 'especialista'" (click)="habilitarUsuario(usuario)" [disabled]="usuario.habilitado">Habilitar</button>
+        <button *ngIf="usuario.role === 'especialista'" (click)="inhabilitarUsuario(usuario)" [disabled]="!usuario.habilitado">Inhabilitar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

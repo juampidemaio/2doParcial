@@ -1,0 +1,67 @@
+/* Estilo general para la sección de detalles del usuario */
+.details-container {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0; /* Borde sutil alrededor del contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo claro */
+  }
+  
+  /* Estilo para los encabezados */
+  .details-container h3 {
+    font-family: 'Oswald', sans-serif; /* Fuente 'Oswald' */
+    color: #333; /* Color de texto oscuro */
+    margin-bottom: 15px; /* Margen inferior para separar del contenido */
+  }
+  
+  /* Estilo para los párrafos */
+  .details-container p {
+    font-size: 16px; /* Tamaño de fuente para los detalles */
+    color: #555; /* Color de texto gris */
+    margin: 8px 0; /* Margen arriba y abajo de cada párrafo */
+  }
+  
+  /* Estilo para los elementos destacados */
+  .details-container strong {
+    color: #333; /* Color de texto para elementos destacados */
+  }
+  
+  /* Estilo para las imágenes de perfil */
+  .details-container img {
+    margin-right: 10px; /* Espacio entre imágenes */
+    border-radius: 50%; /* Bordes redondeados para las imágenes */
+    border: 2px solid #ccc; /* Borde sutil alrededor de las imágenes */
+  }
+  
+  /* Estilo específico para inputs */
+  .details-container input[type="text"] {
+    padding: 10px; /* Relleno interno */
+    margin-top: 10px; /* Margen superior */
+    border: 1px solid #ccc; /* Borde de entrada */
+    border-radius: 4px; /* Bordes redondeados para entradas */
+    width: calc(100% - 22px); /* Ancho completo menos padding y borde */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+  }
+  
+  /* Estilos específicos para secciones de usuario */
+  .paciente {
+    background-color: #e7f3ff; /* Fondo azul claro para pacientes */
+    padding: 10px; /* Relleno */
+    border: 1px solid #b3d7ff; /* Borde azul claro */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  .especialista {
+    background-color: #fff3cd; /* Fondo amarillo claro para especialistas */
+    padding: 10px; /* Relleno */
+    border: 1px solid #ffeeba; /* Borde amarillo claro */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  .administrador {
+    background-color: #d4edda; /* Fondo verde claro para administradores */
+    padding: 10px; /* Relleno */
+    border: 1px solid #c3e6cb; /* Borde verde claro */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  

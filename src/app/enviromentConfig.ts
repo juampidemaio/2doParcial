@@ -1,0 +1,2 @@
+//para proteger los datos de la api. esto lo exportamos a app.config
+export const enviromentConfig = {"projectId":"prog2-c4fdc","appId":"1:728549615422:web:7b4095b155981188ad2e6f","storageBucket":"prog2-c4fdc.appspot.com","apiKey":"AIzaSyBhkMwRqcdYn1-Q0rZ4OcD9YycAced6MCc","authDomain":"prog2-c4fdc.firebaseapp.com","messagingSenderId":"728549615422"}

@@ -1,0 +1,51 @@
+<form [formGroup]="adminForm" (ngSubmit)="guardarAdmin()">
+  <div>
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" formControlName="nombre" />
+    <div *ngIf="mostrarError('nombre', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('nombre', 'pattern')">Solo se permiten letras.</div>
+  </div>
+  <div>
+    <label for="apellido">Apellido:</label>
+    <input id="apellido" formControlName="apellido" />
+    <div *ngIf="mostrarError('apellido', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('apellido', 'pattern')">Solo se permiten letras.</div>
+  </div>
+  
+  <div>
+    <label for="edad">Edad:</label>
+    <input id="edad" type="number" formControlName="edad" />
+    <div *ngIf="mostrarError('edad', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('edad', 'min')">La edad mínima es 18 años.</div>
+    <div *ngIf="mostrarError('edad', 'max')">La edad máxima es 99 años.</div>
+  </div>
+  
+  <div>
+    <label for="dni">DNI:</label>
+    <input id="dni" formControlName="dni" />
+    <div *ngIf="mostrarError('dni', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('dni', 'pattern')">El DNI debe tener 8 dígitos.</div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="mostrarError('email', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('email', 'email')">Formato de email inválido.</div>
+  </div>
+  
+  <div>
+    <label for="password">Contraseña:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div *ngIf="mostrarError('password', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('password', 'minlength')">La contraseña debe tener al menos 6 caracteres.</div>
+  </div>
+
+  <div>
+    <label for="imagen">Sube 1 imagen:</label>
+    <input type="file" (change)="agregarImagen($event)" />
+    <div *ngIf="mostrarError('imagenes', 'required')">Debes subir al menos 1 imagen.</div>
+  </div>
+  
+  <button type="submit">Registrar administrador</button>
+</form>
