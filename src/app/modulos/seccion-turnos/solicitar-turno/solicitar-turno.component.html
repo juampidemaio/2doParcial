@@ -1,0 +1,33 @@
+<form [formGroup]="turnoForm" (ngSubmit)="solicitarTurno()">
+    
+    <label for="especialidad">Especialidad:</label>
+    <select id="especialidad" formControlName="especialidad" (change)="onEspecialidadChange($event)">
+    <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
+    </select>
+
+    <label for="especialista">Especialista:</label>
+    <select id="especialista" formControlName="especialista" (change)="onEspecialistaChange($event)">
+      <option *ngFor="let especialista of especialistas" [value]="especialista.uid"  (nombreEspecialista)="especialista">{{ especialista.nombre }}</option>
+    </select>
+  
+    <label for="horario">Horario:</label>
+    <select id="horario" formControlName="horario">
+      <option *ngFor="let horario of horarios" [value]="horario.id">{{ horario.fecha }} - {{ horario.hora_inicio }}hs hasta {{ horario.hora_fin }}hs</option>
+    </select>
+  
+    <div *ngIf="isAdmin">
+        <label for="paciente">Paciente:</label>
+        <input id="paciente" formControlName="paciente" type="text" [readonly]="isAdmin" />
+        
+        <label for="dni">DNI:</label>
+        <input id="dni" formControlName="dni" type="text" [readonly]="isAdmin" />
+
+        <label for="obraSocial">Obra Social:</label>
+        <input id="obraSocial" formControlName="obraSocial" type="text" [readonly]="isAdmin" />
+    </div>  
+
+    <!-- Mostrar el listado de pacientes solo si es administrador -->
+    <app-listado-paciente *ngIf="isAdmin" (usuarioSeleccionado)="setPacienteData($event)"></app-listado-paciente>
+
+    <button type="submit">Solicitar Turno</button>
+</form>

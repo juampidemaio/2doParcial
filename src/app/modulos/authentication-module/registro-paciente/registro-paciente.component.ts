@@ -14,6 +14,7 @@ export class RegistroPacienteComponent {
   pacienteForm: FormGroup;
   private readonly allowedFileTypes: string[] = ['image/jpeg', 'image/png', 'image/gif']; // Tipos de archivo permitidos
   private readonly maxFileSize: number = 2 * 1024 * 1024; // 2 MB en bytes
+  captchaValido: boolean = false; // Variable para almacenar el estado del captcha
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +24,7 @@ export class RegistroPacienteComponent {
     this.pacienteForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      edad: ['', [Validators.required, Validators.min(1), Validators.max(123)]],
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8,8}$')]],
       obraSocial: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -74,7 +75,7 @@ export class RegistroPacienteComponent {
 
   // Registrar paciente
   async guardarPaciente(): Promise<void> {
-    if (this.pacienteForm.valid) {
+    if (this.pacienteForm.valid  && this.captchaValido) {
       const imagenesArray = this.pacienteForm.get('imagenes') as FormArray;
       if (imagenesArray.length !== 2) {
         Swal.fire('Error', 'Debes subir exactamente 2 imágenes.', 'error');

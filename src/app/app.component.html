@@ -1,12 +1,31 @@
 <nav class="navbar">
-    <a class="nav-link" routerLink="home" routerLinkActive="active-route">HOME</a>
-    <a class="nav-link" routerLink="quien-soy" routerLinkActive="active-route">QUIÉN SOY</a>
+  <img src="favicon.ico" alt="Icono de la página" class="navbar-icon" />
+
+  <a class="nav-link" (click)="goTo('bienvenida')" routerLinkActive="active-route">bienvenida</a>
+
+  <a *ngIf="isLoggedIn && (isAdmin || isPaciente)" class="nav-link" (click)="goTo('/seccion-turnos/solicitar-turno')" routerLinkActive="active-route">Seccion Turnos</a>
+
+  <a *ngIf="isEpecialista" class="nav-link" (click)="goTo('/usuarios/seccion-pacientes')" routerLinkActive="active-route">Seccion Pacientes</a>
+
+  <a *ngIf="isEpecialista" class="nav-link" (click)="goTo('/seccion-turnos/turnos-especialista')" routerLinkActive="active-route">Mis Turnos</a>
+
+  <a *ngIf="isEpecialista" class="nav-link" (click)="goTo('mis-horarios')" routerLinkActive="active-route">Mis Horarios</a>
+
+  <a *ngIf="isPaciente" class="nav-link" (click)="goTo('/seccion-turnos/turnos-pacientes')" routerLinkActive="active-route">Mis Turnos</a>
   
-    <div class="nav-links-derecha">
-      <a *ngIf="isAdmin" class="nav-link-encuesta" (click)="goTo('/usuarios/seccion-usuarios')">seccion usuarios</a>
-      <a *ngIf="isLoggedIn" class="nav-link-logout" (click)="confirmLogout()">CERRAR SESION</a>
-    </div>
-  </nav>
-  
-  <router-outlet></router-outlet>
-  
+
+  <div class="nav-links-derecha">
+    <a *ngIf="isAdmin" class="nav-link-encuesta" (click)="goTo('/usuarios/seccion-usuarios')">seccion usuarios</a>
+
+    <!-- <a *ngIf="isAdmin" class="nav-link-turno" (click)="goTo('/seccion-turnos/gestionar-horarios')">gestionar horarios</a> -->
+
+    <a *ngIf="isAdmin" class="nav-link-turno" (click)="goTo('/seccion-turnos/gestionar-turnos')">gestionar Turnos</a>
+
+    <a *ngIf="isLoggedIn" class="nav-link-logout" (click)="goTo('mi-perfil')">mi perfil</a>
+    
+    <a *ngIf="isLoggedIn" class="nav-link-logout" (click)="confirmLogout()">CERRAR SESION</a>
+    
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

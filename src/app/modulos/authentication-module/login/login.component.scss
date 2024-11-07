@@ -19,19 +19,29 @@ body {
 }
 
 .card {
-  background-color: rgba(183, 244, 249, 0.9); /* Color de fondo más visible */
+  display: flex; /* Usar flexbox */
+  flex-direction: column; /* Colocar los elementos en columna */
+  align-items: center; /* Alinear todos los elementos al centro */
+  justify-content: center; /* Centrar verticalmente */
+  background-color: rgba(183, 244, 249, 0.9);
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   border-radius: 20px;
-  padding: 40px; /* Mayor padding para el contenido */
-  width: 450px; 
+  padding: 40px; 
+  width: 600px; 
+  height: auto; /* Permitir que la altura se ajuste automáticamente */
   max-width: 90%; 
+  min-height: 600px; /* Altura mínima para centrar el contenido */
+  margin: 20px auto; /* Centrando la tarjeta horizontalmente */
+  text-align: center;
 }
+
 
 h1 {
   color: #333;
   margin-bottom: 20px; /* Espacio entre el título y los campos */
   text-align: center; /* Centrar el texto del título */
+  margin-bottom: 25px;
 }
 
 .form-control {
@@ -40,6 +50,8 @@ h1 {
   border-radius: 10px;
   border: 2px solid #ddd;
   transition: all 0.3s ease;
+  text-align: center; /* Centrar el texto del título */
+  width: 250px;
 }
 
 .form-control:focus {
@@ -88,4 +100,41 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+.quick-access-container {
+  display: flex; /* Usar flexbox para alinear los botones */
+  justify-content: center; /* Centrar los botones en el contenedor */
+  align-items: center; /* Centrar verticalmente los botones */
+  margin-bottom: 20px; /* Espacio debajo de los botones */
+  width: 100%;
+  flex-wrap: wrap; /* Permitir que los botones se ajusten a la línea */
+}
+
+.quick-access-btn {
+  display: flex; /* Hacer flex el botón */
+  align-items: center; /* Centrar el contenido del botón */
+  justify-content: center; /* Centrar el contenido del botón */
+  background-color: #ffffff; /* Color de fondo blanco */
+  color: #333; /* Color del texto */
+  border: 2px solid #ddd; /* Bordes */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 8px; /* Padding */
+  text-decoration: none; /* Sin subrayado */
+  margin: 5px; /* Separación entre botones */
+  width: 80px; /* Ancho más pequeño para los botones */
+  transition: all 0.3s ease; /* Transición suave */
+  font-size: 0.9em;
+}
+
+
+.quick-access-btn:hover {
+  background-color: #ffcc00; /* Color al pasar el mouse */
+  color: #fff; /* Cambiar color del texto */
+}
+
+.quick-access-btn img {
+  width: 50px; /* Ancho de la imagen */
+  height: 33px; /* Altura de la imagen */
+  border-radius: 50%; /* Bordes redondeados para la imagen */
 }

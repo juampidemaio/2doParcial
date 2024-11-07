@@ -46,6 +46,9 @@
     <input type="file" (change)="agregarImagen($event)" />
     <div *ngIf="mostrarError('imagenes', 'required')">Debes subir al menos 1 imagen.</div>
   </div>
-  
-  <button type="submit">Registrar administrador</button>
+  <div class="captcha-container">
+    <input appCaptcha (captchaValido)="captchaValido = $event" placeholder="Ingrese el código" class="form-control" />
+  </div>
+
+  <button type="submit" [disabled]="!captchaValido">Registrar Administrador</button>
 </form>

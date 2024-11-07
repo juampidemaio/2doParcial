@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://img.freepik.com/foto-gratis/vista-superior-salud-todavia-vida-espacio-copia_23-2148854035.jpg?t=st=1730589054~exp=1730592654~hmac=386be444df2bd39daee260f4ba2e5945bcd8eae2d33bac14cf99100a11a66914&w=1380');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(4px); 
+    z-index: -1; 
+}
+
+/* Ajustes para pantallas muy grandes */
+@media (min-width: 1600px) {
+    body::before {
+        background-size: cover; /* Asegura que la imagen siempre cubra la pantalla */
+        background-position: top center; /* Cambia ligeramente la posición para pantallas muy grandes */
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 600px) {
+    body::before {
+        background-size: cover;
+        background-position: center;
+    }
+}

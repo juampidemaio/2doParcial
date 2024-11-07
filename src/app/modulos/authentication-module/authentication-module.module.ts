@@ -9,10 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistroAdminComponent } from './registro-admin/registro-admin.component';
 import { UsuariosModule } from '../usuarios/usuarios.module';
 import { LoginComponent } from './login/login.component';
+import { CaptchaDirective } from '../../directivas/captcha.directive';
 
 
 @NgModule({
-  declarations: [RegistroComponent, RegistroPacienteComponent, RegistroEspecialistaComponent, LoginComponent,RegistroAdminComponent],
+  declarations: [RegistroComponent, RegistroPacienteComponent, RegistroEspecialistaComponent, LoginComponent,RegistroAdminComponent,CaptchaDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,

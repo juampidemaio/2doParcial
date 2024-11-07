@@ -14,6 +14,7 @@ export class RegistroAdminComponent {
   adminForm: FormGroup;
   private readonly allowedFileTypes: string[] = ['image/jpeg', 'image/png', 'image/gif']; // Tipos de archivo permitidos
   private readonly maxFileSize: number = 2 * 1024 * 1024; // 2 MB en bytes
+  captchaValido: boolean = false; // Variable para almacenar el estado del captcha
 
   constructor(
     private fb: FormBuilder,
@@ -77,7 +78,7 @@ export class RegistroAdminComponent {
 
   // Registrar admin
   async guardarAdmin(): Promise<void> {
-    if (this.adminForm.valid) {
+    if (this.adminForm.valid && this.captchaValido) {
       const imagenesArray = this.adminForm.get('imagenes') as FormArray;
       if (imagenesArray.length !== 1) {
         Swal.fire('Error', 'Debes subir exactamente 1 imagen.', 'error');
@@ -112,7 +113,7 @@ export class RegistroAdminComponent {
 
         Swal.fire('Registro exitoso', 'El administrador ha sido registrado correctamente', 'success');
         this.adminForm.reset();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/bienvenida']);
       } catch (error) {
         Swal.fire('Error', 'Ha ocurrido un error durante el registro', 'error');
       } finally {

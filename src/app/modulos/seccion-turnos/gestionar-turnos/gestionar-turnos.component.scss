@@ -1,0 +1,108 @@
+/* Estilos para el título */
+h2 {
+    color: #154360; /* Azul oscuro */
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  /* Estilos para los selectores */
+  label {
+    font-weight: bold;
+    color: #154360;
+    margin-right: 0.5rem;
+  }
+  
+  select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #D5D8DC;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  select:focus {
+    border-color: #154360;
+  }
+  
+  /* Estilos para la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  th, td {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #154360; /* Azul oscuro */
+    color: #FFFFFF;
+  }
+  
+  thead th {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #F2F3F4; /* Gris claro */
+  }
+  
+  tbody tr:hover {
+    background-color: #D5E8E8; /* Azul claro */
+    transform: scale(1.01);
+  }
+  
+  tbody td {
+    border-bottom: 1px solid #F2F3F4;
+  }
+  
+ /* Estilos para los botones */
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+}
+button.no-accion {
+  background-color: #b0e915; /* Rojo oscuro */
+}
+
+button.cancelar {
+  background-color: #C0392B; /* Rojo oscuro */
+}
+
+button.cancelar:hover {
+  background-color: #A93226; /* Un tono más oscuro de rojo */
+  transform: scale(1.05);
+}
+
+  /* Estado de turno */
+  td.estado {
+    font-weight: bold;
+    color: #1E8449; /* Verde para habilitado */
+  }
+  
+  td.estado.inhabilitado {
+    color: #C0392B; /* Rojo para inhabilitado */
+  }
+  

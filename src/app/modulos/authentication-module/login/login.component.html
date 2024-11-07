@@ -1,33 +1,57 @@
 <div class="overlay d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-lg" style="width: 450px; border-radius: 20px;">
-      <h1 class="text-center mb-4">Inicio Sesión</h1>
-      <form (ngSubmit)="Login()">
-        <div class="form-group">
-          <label for="nombre">Email</label>
-          <input type="email" class="form-control" id="nombre" [(ngModel)]="userMail" name="email" placeholder="Ingrese su email" required>
-        </div>
-        <div class="form-group">
-          <label for="clave">Contraseña</label>
-          <input type="password" class="form-control" id="clave" [(ngModel)]="userPWD" name="password" placeholder="Ingrese su contraseña" required>
-        </div>
-  
-        <div class="text-center mb-3">
-          <a id="olvido-contrasena" class="text-decoration-none">¿Olvidó su contraseña?</a>
-        </div>
-  
-        <button type="submit" class="btn btn-warning btn-block rounded-pill font-weight-bold">Ingresar</button>
-  
-        <div class="text-center mt-3">
-          <button type="button" class="btn quick-access-btn mr-2" (click)="setQuickAccess('celusal704@gmail.com', '123456')">admin</button>
-          <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('demaiojuanpablo05@gmail.com', '123456')">paciente</button>
-          <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('demaiojuanpablo2005@gmail.com', '123456')">especialista</button>
-        </div>
-  
-        <div class="text-center mt-3">
+  <div class="card p-4 shadow-lg" style="width: 600px; border-radius: 20px;">
+    <h1 class="text-center mb-4">Inicio Sesión</h1>
+
+    <!-- Botones de Acceso Rápido -->
+    <div class="quick-access-container text-center mb-3">
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('celusal704@gmail.com', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2Fadmin1.jpeg?alt=media&token=a57cbd55-f2e1-4757-af16-eff8bdafa8bb" alt="Admin" class="profile-image">
+
+      </button>
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('demaiojuanpablo05@gmail.com', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2FprimerPaciente2.jpeg?alt=media&token=99602e1f-cbf5-4875-9578-4abed68d326e" alt="Paciente 1" class="profile-image">
+        
+      </button>
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('whole.bovid.bmlb@flashpost.net', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2FsegundoPaciente2.jpeg?alt=media&token=5810d4e8-b42d-4700-92f7-9c2b0555f6e5" alt="Paciente 2" class="profile-image">
+        
+      </button>
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('surprising.amphibian.jhgc@flashpost.net', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2FtercerPaciente2.jpeg?alt=media&token=2db42b31-2a1c-4089-9cbb-83e135bde901" alt="Paciente 3" class="profile-image">
+        
+      </button>
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('demaiojuanpablo2005@gmail.com', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2Fespecialista1.jpeg?alt=media&token=bf238ea3-3895-4bce-8c26-f4d0230180ec" alt="Especialista 1" class="profile-image">
+        
+      </button>
+      <button type="button" class="btn quick-access-btn" (click)="setQuickAccess('integral.pig.qzgk@flashpost.net', '123456')">
+        <img src="https://firebasestorage.googleapis.com/v0/b/prog2-c4fdc.appspot.com/o/images%2Fespecialista2.jpeg?alt=media&token=6f0acb41-2667-4bf3-b506-c2a4da7a2e21" alt="Especialista 2" class="profile-image">
+        
+      </button>
+    </div>
+
+    <form (ngSubmit)="Login()">
+      <div class="form-group">
+        <label for="nombre">Email</label>
+        <input type="email" class="form-control" id="nombre" [(ngModel)]="userMail" name="email" placeholder="Ingrese su email" required>
+      </div>
+      <div class="form-group">
+        <label for="clave">Contraseña</label>
+        <input type="password" class="form-control" id="clave" [(ngModel)]="userPWD" name="password" placeholder="Ingrese su contraseña" required>
+      </div>
+
+      <div class="text-center mb-3">
+        <a id="olvido-contrasena" class="text-decoration-none">¿Olvidó su contraseña?</a>
+      </div>
+
+      <button type="submit" class="btn btn-warning btn-block rounded-pill font-weight-bold">Ingresar</button>
+
+      <div class="text-center mt-3">
+        <div>
           <span>¿No tienes una cuenta?</span>
           <a id="registrarse" class="text-decoration-none" (click)="goTo('/authentication/registro')">Registrarse</a>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
-  
+</div>

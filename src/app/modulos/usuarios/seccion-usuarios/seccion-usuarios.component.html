@@ -1,4 +1,28 @@
-<h2> Bienvenido a la seccion de Usuarios</h2>
-<app-registro></app-registro>
-<app-listado-usuarios (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-usuarios>
-<app-detalle-usuarios *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalle-usuarios>
+<h2> Bienvenido a la sección de Usuarios</h2>
+
+<!-- Botones para seleccionar el tipo de listado -->
+<div class="botones-container" *ngIf="!registroVisible">
+  <button (click)="mostrarListado('especialista')" [ngClass]="{ active: listadoSeleccionado === 'especialista' }">Listado Especialistas</button>
+  <button (click)="mostrarListado('paciente')" [ngClass]="{ active: listadoSeleccionado === 'paciente' }">Listado Pacientes</button>
+  <button (click)="mostrarListado('admin')" [ngClass]="{ active: listadoSeleccionado === 'admin' }">Listado Administradores</button>
+</div>
+
+<div class="usuarios-container" *ngIf="!registroVisible">
+  <!-- Componente de Listado de Usuarios -->
+  <app-listado-especialista *ngIf="listadoSeleccionado === 'especialista'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-especialista>
+  <app-listado-paciente *ngIf="listadoSeleccionado === 'paciente'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-paciente>
+  <app-listado-admin *ngIf="listadoSeleccionado === 'admin'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-admin>
+
+  <!-- Componente de Detalle de Usuarios -->
+  <app-detalle-usuarios *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalle-usuarios>
+</div>
+
+<!-- Botón para mostrar/ocultar el registro -->
+<div class="boton-registro-container">
+  <button id="boton-registro" (click)="toggleRegistro()">
+    {{ registroVisible ? 'Ocultar Registro' : 'Crear Usuario' }}
+  </button>
+</div>
+
+<!-- Componente de Registro de Usuarios -->
+<app-registro *ngIf="registroVisible"></app-registro>

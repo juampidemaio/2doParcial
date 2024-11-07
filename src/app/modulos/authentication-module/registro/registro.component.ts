@@ -9,26 +9,24 @@ import { Router } from '@angular/router';
   styleUrl: './registro.component.scss'
 })
 export class RegistroComponent {
-  tipoUsuario: 'paciente' | 'especialista' | 'administrador' = 'paciente'; // Por defecto, se registra como paciente
-  esAdmin: boolean = false; // Indica si el usuario actual es administrador
+  tipoUsuario: 'paciente' | 'especialista' | 'administrador' = 'paciente';
+  esAdmin: boolean = false;
 
   constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.getUser().subscribe(user => {
       if (user && user.role === 'administrador') {
-        this.esAdmin = true;  // Solo muestra la opción si el usuario es administrador
+        this.esAdmin = true;
       }
     });
   }
-  
 
-  cambiarTipoUsuario(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.tipoUsuario = selectElement.value as 'paciente' | 'especialista' | 'administrador';
+  cambiarTipoUsuario(tipo: 'paciente' | 'especialista' | 'administrador'): void {
+    this.tipoUsuario = tipo;
   }
-  goTo(path:string)
-  {
+
+  goTo(path: string): void {
     this.router.navigate([path]);
   }
 }

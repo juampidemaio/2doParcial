@@ -1,0 +1,55 @@
+<h2>Listado de Turnos</h2>
+
+<label>Especialidad:</label>
+<div *ngFor="let especialidad of especialidades">
+  <input type="radio" [value]="especialidad" name="especialidad" (change)="onEspecialidadChange($event)" /> {{especialidad}}
+</div>
+
+<label>Pacientes:</label>
+<div *ngFor="let paciente of pacientes"> <!-- Asegúrate de que `pacientes` contenga todos los pacientes -->
+  <input type="radio" [value]="paciente.uid" name="paciente" (change)="onPacienteChange($event, paciente)" /> 
+  {{ paciente.nombre }} {{ paciente.apellido }}
+</div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>DNI</th>
+      <th>Paciente</th>
+      <th>Obra Social</th>
+      <th>Especialista</th>
+      <th>Especialidad</th>
+      <th>Fecha</th>
+      <th>Horario</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let horario of horarios">
+      <td>{{ horario.dni }}</td>
+      <td>{{ nombrePaciente}}</td>
+      <td>{{ horario.obraSocial }}</td>  
+      <td>{{ horario.especialista }}</td>
+      <td>{{ especialidadSeleccionada }}</td>
+      <td>{{ horario.fecha }}</td>
+      <td>{{ horario.hora_inicio }} - {{ horario.hora_fin }}</td>
+      <td>{{ horario.estado }}</td>
+      <td>
+        <button *ngIf="horario.estado === 'solicitado'" class="cancelar" (click)="cancelarTurno(horario)">
+          Cancelar Turno
+        </button>
+        <button *ngIf="horario.estado === 'solicitado'" class="aceptar" (click)="aceptarTurno(horario)">
+          aceptar turno
+        </button>
+        <button *ngIf="horario.estado === 'aceptado'" class="finalizar" (click)="finalizarTurno(horario)">
+          finalizar turno
+        </button>
+        <button *ngIf="horario.estado === 'realizado'" class="realizado" (click)="verResenaTurno(horario)">
+         ver reseña
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

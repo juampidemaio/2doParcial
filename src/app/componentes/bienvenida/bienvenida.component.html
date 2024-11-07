@@ -1,6 +1,6 @@
 <div class="welcome-container">
     <div class="logo">
-      <img src="public/favicon.ico" alt="Logo de la Clínica" />
+      <img src="favicon.ico" alt="Logo de la Clínica" />
     </div>
     <h1>Bienvenido a nuestra Clínica</h1>
     <p>
@@ -8,12 +8,13 @@
       calidad para todos nuestros pacientes. Nuestro equipo de profesionales
       está aquí para cuidar de ti y de tu salud.
     </p>
-    <p>
+    
+    <p *ngIf="!usuario">
       Para acceder a nuestros servicios, inicia sesión o regístrate si
       aún no tienes una cuenta.
     </p>
     
-    <div class="buttons">
+    <div *ngIf="!usuario" class="buttons">
       <button class="btn btn-primary"   (click)="goTo('/authentication/login')">Iniciar Sesión</button>
       <button class="btn btn-secondary" (click)="goTo('/authentication/registro')">Registrarse</button>
     </div>

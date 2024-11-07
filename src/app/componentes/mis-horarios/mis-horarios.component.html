@@ -1,0 +1,29 @@
+<h2>Asignar Disponibilidad Horaria</h2>
+
+<label>Especialidad:</label>
+<div *ngFor="let especialidad of especialidades">
+  <input type="radio" [value]="especialidad" name="especialidad" (change)="onEspecialidadChange($event)" /> {{especialidad}}
+</div>
+<div>
+  <form (ngSubmit)="guardarDisponibilidad()">
+    <div *ngFor="let dia of ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']">
+      <label>{{ dia | titlecase }}</label>
+      <div class="horarios">
+        <input 
+          type="time" 
+          [(ngModel)]="disponibilidadSemana[dia].horaInicio" 
+          name="{{ dia }}HoraInicio" 
+          placeholder="Hora de inicio"
+        >
+        <input 
+          type="time" 
+          [(ngModel)]="disponibilidadSemana[dia].horaFin" 
+          name="{{ dia }}HoraFin" 
+          placeholder="Hora de fin"
+        >
+      </div>
+    </div>
+
+    <button type="submit">Guardar Disponibilidad</button>
+  </form>
+</div>

@@ -1,0 +1,78 @@
+/* Estilos generales del formulario */
+form {
+    max-width: 800px; /* Aumento del ancho máximo del formulario */
+    margin: 20px auto; /* Centrando el formulario en la página */
+    padding: 30px; /* Espaciado interno */
+    border: 2px solid #007bff; /* Borde color azul */
+    border-radius: 15px; /* Bordes redondeados más pronunciados */
+    background-color: #e0f7fa; /* Fondo celeste claro */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  }
+  
+  /* Estilo de etiquetas */
+  label {
+    font-weight: bold; /* Negrita para las etiquetas */
+    margin-bottom: 5px; /* Margen inferior para separación */
+    display: block; /* Bloque para ocupar el ancho completo */
+    color: #007bff; /* Color azul para etiquetas */
+  }
+  
+  /* Estilo de los campos de entrada y select */
+  input[type="text"],
+  select {
+    width: 100%; /* Ancho completo */
+    padding: 12px; /* Relleno interno */
+    border: 1px solid #007bff; /* Borde azul */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 15px; /* Espacio inferior entre campos */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+    transition: border-color 0.3s, background-color 0.3s; /* Transición suave */
+    background-color: #f1f1f1; /* Color de fondo gris claro */
+  }
+  
+  /* Efecto de enfoque en los campos de entrada y select */
+  input[type="text"]:focus,
+  select:focus {
+    border-color: #0056b3; /* Color azul más oscuro al enfocarse */
+    outline: none; /* Sin borde de enfoque predeterminado */
+    background-color: #ffffff; /* Fondo blanco al enfocarse */
+  }
+  
+  /* Estilo para los mensajes de error */
+  div[ngIf] {
+    color: #dc3545; /* Color rojo para mensajes de error */
+    font-size: 0.9em; /* Tamaño de fuente ligeramente más pequeño */
+    margin-top: -10px; /* Margen superior negativo para acercar el mensaje */
+    margin-bottom: 10px; /* Margen inferior para separación */
+  }
+  
+  /* Estilo del botón de envío */
+  button[type="submit"] {
+    background-color: #007bff; /* Color de fondo azul */
+    color: white; /* Color del texto blanco */
+    padding: 12px 15px; /* Relleno interno */
+    border: none; /* Sin borde */
+    border-radius: 6px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+    width: 100%; /* Ancho completo */
+    font-size: 1em; /* Tamaño de la fuente */
+  }
+  
+  /* Efecto de hover en el botón */
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+  }
+  
+  /* Estilo para el contenedor de cada campo */
+  div {
+    margin-bottom: 20px; /* Espacio entre campos */
+  }
+  
+  /* Estilo específico para el contenedor de campos de paciente, DNI y obra social */
+  div *ngIf {
+    margin-bottom: 20px; /* Espacio entre campos en este bloque específico */
+  }
+  

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '../../../servicios/authentication.service';
+import { EspecialidadService } from '../../../servicios/especialidad.service';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -11,118 +12,151 @@ import { AuthenticationService } from '../../../servicios/authentication.service
   styleUrl: './registro-especialista.component.scss'
 })
 export class RegistroEspecialistaComponent {
- especialistaForm: FormGroup;
-  private readonly allowedFileTypes: string[] = ['image/jpeg', 'image/png', 'image/gif']; // Tipos de archivo permitidos
+  especialistaForm: FormGroup;
+  private readonly allowedFileTypes: string[] = ['image/jpeg', 'image/png', 'image/gif'];
   private readonly maxFileSize: number = 2 * 1024 * 1024; // 2 MB en bytes
+  especialidades: string[] = [];
+  captchaValido: boolean = false; // Variable para almacenar el estado del captcha
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router
-) {
+    private router: Router,
+    private especialidadService: EspecialidadService
+  ) {
     this.especialistaForm = this.fb.group({
-        nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
-        dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
-        especialidad: ['', Validators.required],
-        nuevaEspecialidad: [''],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        imagenes: this.fb.array([], [Validators.required]) // Validación de required aquí
+      nombre: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      apellido: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
+      especialidades: this.fb.array([], Validators.required),
+      nuevaEspecialidad: [''],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      imagenes: this.fb.array([], Validators.required)
     });
-}
-  onEspecialidadChange(): void {
-    const especialidadControl = this.especialistaForm.get('especialidad');
-    const nuevaEspecialidadControl = this.especialistaForm.get('nuevaEspecialidad');
-
-    if (especialidadControl?.value === 'otro') {
-      nuevaEspecialidadControl?.setValidators([Validators.required]);
-    } else {
-      nuevaEspecialidadControl?.clearValidators();
-    }
-
-    nuevaEspecialidadControl?.updateValueAndValidity();
   }
+
+  ngOnInit(): void {
+    this.loadEspecialidades();
+  }
+  private loadEspecialidades(): void {
+    this.especialidadService.getEspecialidades().then(data => {
+      // Extrae solo el campo de nombre de cada especialidad
+      this.especialidades = data.map(especialidad => especialidad.nombre);
+    });
+  }
+  
+  onEspecialidadChange(event: any): void {
+    const especialidadesArray = this.especialistaForm.get('especialidades') as FormArray;
+
+    if (event.target.checked) {
+      especialidadesArray.push(this.fb.control(event.target.value));
+    } else {
+      const index = especialidadesArray.controls.findIndex(control => control.value === event.target.value);
+      if (index >= 0) {
+        especialidadesArray.removeAt(index);
+      }
+    }
+  }
+agregarNuevaEspecialidad(): void {
+  const nuevaEspecialidad = this.especialistaForm.get('nuevaEspecialidad')?.value?.trim();
+  
+  if (!nuevaEspecialidad) {
+    Swal.fire('Advertencia', 'Ingresa una nueva especialidad antes de agregarla.', 'warning');
+    return;
+  }
+  
+  // Verifica si la especialidad ya existe en la lista
+  if (this.especialidades.includes(nuevaEspecialidad)) {
+    Swal.fire('Advertencia', 'La especialidad ya existe en la lista.', 'warning');
+    return;
+  }
+
+  // Si no existe, agregar la nueva especialidad
+  this.especialidadService.addEspecialidad(nuevaEspecialidad).then(() => {
+    Swal.fire('Éxito', 'Nueva especialidad agregada correctamente.', 'success');
+    this.loadEspecialidades(); // Recarga la lista de especialidades
+    this.especialistaForm.get('nuevaEspecialidad')?.reset();
+  }).catch(error => {
+    Swal.fire('Error', 'No se pudo agregar la especialidad.', 'error');
+  });
+}
+
+
   agregarImagen(event: Event): void {
     const input = event.target as HTMLInputElement;
     const imagenesArray = this.especialistaForm.get('imagenes') as FormArray;
 
     if (input.files && input.files.length > 0) {
-        const file = input.files[0];
+      const file = input.files[0];
 
-        // Validar el tipo de archivo y el tamaño
-        if (!this.allowedFileTypes.includes(file.type)) {
-            Swal.fire('Tipo de archivo no válido', 'Por favor, sube una imagen en formato JPEG, PNG o GIF.', 'error');
-            return;
-        }
+      if (!this.allowedFileTypes.includes(file.type)) {
+        Swal.fire('Tipo de archivo no válido', 'Por favor, sube una imagen en formato JPEG, PNG o GIF.', 'error');
+        return;
+      }
 
-        if (file.size > this.maxFileSize) {
-            Swal.fire('Tamaño de archivo excedido', 'El tamaño máximo permitido es de 2 MB.', 'error');
-            return;
-        }
+      if (file.size > this.maxFileSize) {
+        Swal.fire('Tamaño de archivo excedido', 'El tamaño máximo permitido es de 2 MB.', 'error');
+        return;
+      }
 
-        // Limpiar el array antes de agregar una nueva imagen
-        imagenesArray.clear(); 
-        imagenesArray.push(this.fb.control(file));
+      imagenesArray.clear();
+      imagenesArray.push(this.fb.control(file));
     }
-}
+  }
 
   mostrarError(campo: string, error: string): boolean {
     const control = this.especialistaForm.get(campo);
     return control ? control.hasError(error) && (control.dirty || control.touched) : false;
   }
 
-  // Registrar especialista
- async guardarEspecialista(): Promise<void> {
-  if (this.especialistaForm.valid) {
-      Swal.fire({
-          title: 'Cargando...',
-          text: 'Por favor, espera un momento.',
-          allowOutsideClick: false,
-      });
+  async guardarEspecialista(): Promise<void> {
+    if (this.especialistaForm.valid && this.captchaValido) {
+        const especialidadesArray = this.especialistaForm.get('especialidades') as FormArray;
+        const nuevaEspecialidad = this.especialistaForm.get('nuevaEspecialidad')?.value;
 
-      Swal.showLoading(); 
+        // Si no hay especialidades seleccionadas y se ingresó una nueva, agregarla al array.
+        if (especialidadesArray.length === 0 && nuevaEspecialidad) {
+            especialidadesArray.push(this.fb.control(nuevaEspecialidad));
+        } else if (especialidadesArray.length === 0) {
+            Swal.fire('Advertencia', 'Debes seleccionar al menos una especialidad o agregar una nueva.', 'warning');
+            return;
+        }
 
-      const { especialidad, nuevaEspecialidad } = this.especialistaForm.value;
-      const especialidadFinal = especialidad || nuevaEspecialidad;
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor, espera un momento.',
+            allowOutsideClick: false,
+        });
 
-      if (!especialidadFinal) {
-          Swal.fire('Error', 'Debes seleccionar una especialidad o ingresar una nueva.', 'error');
-          return;
-      }
+        Swal.showLoading();
 
-      const imagenesArray = this.especialistaForm.get('imagenes') as FormArray;
-      if (imagenesArray.length !== 1) {
-          Swal.fire('Error', 'Debes subir exactamente 1 imagen.', 'error');
-          return;
-      }
+        const imagenesArray = this.especialistaForm.get('imagenes') as FormArray;
+        const file = imagenesArray.at(0).value;
 
-      const file = imagenesArray.at(0).value; 
-      try {
-          const imageUrl = await this.authService.uploadImage(file); 
-          const userData = { 
-              ...this.especialistaForm.value, 
-              especialidad: especialidadFinal, 
-              role: 'especialista',
-              imageUrl 
-          };
-          delete userData.imagenes; 
+        try {
+            const imageUrl = await this.authService.uploadImage(file);
+            const userData = {
+                ...this.especialistaForm.value,
+                especialidades: especialidadesArray.value,
+                role: 'especialista',
+                imageUrl
+            };
+            delete userData.imagenes;
 
-          await this.authService.registerUser(userData.email, userData.password, userData, 'especialista');
+            await this.authService.registerUser(userData.email, userData.password, userData, 'especialista');
 
-          Swal.fire('Registro exitoso', 'El especialista ha sido registrado correctamente', 'success');
-          this.router.navigate(['/bienvenida']);
-      } catch (error) {
-          Swal.fire('Error', `Ha ocurrido un error durante la subida de la imagen: ${error}`, 'error');
-      } finally {
-          Swal.close();
-      }
-      
-  } else {
-      Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
-  }
+            Swal.fire('Registro exitoso', 'El especialista ha sido registrado correctamente', 'success');
+            this.router.navigate(['/bienvenida']);
+        } catch (error) {
+            Swal.fire('Error', `Ha ocurrido un error durante la subida de la imagen: ${error}`, 'error');
+        } finally {
+            Swal.close();
+        }
+    } else {
+        Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
+    }
 }
-
 
 }

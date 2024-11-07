@@ -1,0 +1,90 @@
+h2 {
+  color: #154360; /* Azul oscuro */
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem; /* Tamaño de fuente mayor */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FFFFFF; /* Blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Asegurarse de que los bordes redondeados se vean */
+}
+
+th, td {
+  padding: 1rem; /* Espaciado mayor para mejorar la legibilidad */
+  text-align: left;
+}
+
+thead {
+  background-color: #154360; /* Azul oscuro */
+  color: #FFFFFF; /* Blanco */
+}
+
+thead th {
+  font-weight: bold;
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 0.05em; /* Espaciado entre letras */
+}
+
+tbody tr {
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Suaviza el hover */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #F2F3F4; /* Gris claro */
+}
+
+tbody tr:hover {
+  background-color: #D5E8E8; /* Azul claro al pasar el mouse */
+  transform: scale(1.01); /* Efecto de aumento sutil al hacer hover */
+}
+
+tbody td {
+  border-bottom: 1px solid #F2F3F4; /* Gris claro */
+}
+
+/* Estilos para los botones */
+button {
+  padding: 0.5rem 1rem; /* Ajustar padding */
+  font-size: 0.9rem; /* Tamaño de fuente */
+  border: none;
+  border-radius: 4px;
+  color: #FFFFFF; /* Blanco */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Suaviza la transición */
+  width: 100%; /* Ancho completo */
+}
+
+button.habilitar {
+  
+  background-color: #1E8449; /* Verde oscuro */
+}
+
+button.habilitar:hover {
+  background-color: #1E8449, 10%; /* Verde oscuro */
+  transform: scale(1.05); /* Aumentar un poco el tamaño al pasar el mouse */
+}
+
+button.inhabilitar {
+  background-color: #C0392B; /* Rojo oscuro */
+}
+
+button.inhabilitar:hover {
+  background-color: #C0392B, 10%; /* Rojo oscuro */
+  transform: scale(1.05); /* Aumentar un poco el tamaño al pasar el mouse */
+}
+
+/* Estilos para el estado habilitado/inhabilitado */
+td.habilitado {
+  color: #1E8449; /* Verde oscuro */
+}
+
+td.inhabilitado {
+  color: #C0392B; /* Rojo oscuro */
+}

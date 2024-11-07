@@ -1,0 +1,28 @@
+<!-- <app-listado-especialista (usuarioSeleccionado)="mostrarUsuario($event)"></app-listado-especialista>
+<h2>Asignar Disponibilidad para {{ usuarioSeleccionado?.nombre || 'Selecciona un especialista' }}</h2>
+
+<div *ngIf="usuarioSeleccionado">
+  <form (ngSubmit)="guardarDisponibilidad()">
+    <div *ngFor="let dia of ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']">
+      <label>{{ dia | titlecase }}</label>
+      <div class="horarios">
+        <input 
+          type="time" 
+          [(ngModel)]="disponibilidadSemana[dia].horaInicio" 
+          name="{{ dia }}HoraInicio" 
+          placeholder="Hora de inicio"
+        >
+        <input 
+          type="time" 
+          [(ngModel)]="disponibilidadSemana[dia].horaFin" 
+          name="{{ dia }}HoraFin" 
+          placeholder="Hora de fin"
+        >
+      </div>
+    </div>
+
+    <button type="submit">Guardar Disponibilidad</button>
+  </form>
+</div>
+
+<p *ngIf="!usuarioSeleccionado">Selecciona un especialista para asignar disponibilidad.</p> -->

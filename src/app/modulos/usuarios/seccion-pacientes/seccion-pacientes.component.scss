@@ -1,0 +1,184 @@
+h2 {
+    color: #154360; /* Azul oscuro */
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem; /* Tamaño de fuente mayor */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF; /* Blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Asegurarse de que los bordes redondeados se vean */
+  }
+  
+  th, td {
+    padding: 1rem; /* Espaciado mayor para mejorar la legibilidad */
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #154360; /* Azul oscuro */
+    color: #FFFFFF; /* Blanco */
+  }
+  
+  thead th {
+    font-weight: bold;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 0.05em; /* Espaciado entre letras */
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Suaviza el hover */
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #F2F3F4; /* Gris claro */
+  }
+  
+  tbody tr:hover {
+    background-color: #D5E8E8; /* Azul claro al pasar el mouse */
+    transform: scale(1.01); /* Efecto de aumento sutil al hacer hover */
+  }
+  
+  tbody td {
+    border-bottom: 1px solid #F2F3F4; /* Gris claro */
+  }
+  td.habilitado {
+    color: #28a745; /* Verde */
+    font-weight: bold;
+  }
+  
+  td.inhabilitado {
+    color: #dc3545; /* Rojo */
+    font-weight: bold;
+  }
+  .details-container {
+    background-color: #EAEDED;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
+    width: 95%;
+  }
+  
+    h3 {
+      color: #1E8449;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+  
+    p {
+      font-size: 1.1rem;
+      margin: 0.75rem 0;
+      color: #333;
+    }
+  
+    strong {
+      color: #154360;
+    }
+  
+    .paciente, .especialista, .administrador {
+      margin-top: 1.5rem;
+      border: 2px solid #1E8449;
+      padding: 1.5rem;
+      border-radius: 8px;
+      background-color: rgba(30, 132, 73, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+  
+      &:hover {
+        background-color: rgba(30, 132, 73, 0.3);
+        transform: translateY(-2px);
+      }
+    }
+  
+    img {
+      margin-right: 1rem;
+      border-radius: 8px;
+      border: 2px solid #1E8449;
+    }
+  
+    .historia-clinica {
+      background-color: #f5f5f5;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+      border: 2px solid #154360;
+      transition: background-color 0.3s ease;
+    }
+  
+    .historia-clinica:hover {
+        background-color: rgba(21, 67, 96, 0.1);
+      }
+  
+      .historia-clinica h4 {
+        color: #1E8449;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+  
+      .historia-clinica p {
+        color: #333;
+        font-size: 1.1rem;
+        margin: 0.5rem 0;
+      }
+    
+  
+    /* Botón para alternar la visibilidad */
+    .toggle-button {
+      background-color: #1E8449;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    .toggle-button:hover {
+        background-color: #154360;
+        transform: scale(1.05);
+      }
+  
+      .toggle-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(30, 132, 73, 0.3);
+      }
+    
+  
+    /* Estilos para los turnos */
+    .turno-container {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  
+    .turno-container h5 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+  
+    .turno-container p {
+      margin: 5px 0;
+    }
+  
+    /* Para alternar el fondo de los turnos */
+    .turno-container:nth-child(even) {
+      background-color: #f1f1f1;
+    }
+  
+    .turno-container:nth-child(odd) {
+      background-color: #ffffff;
+    }
+  
+  

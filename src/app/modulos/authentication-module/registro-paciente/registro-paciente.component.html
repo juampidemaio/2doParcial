@@ -54,5 +54,9 @@
       <div *ngIf="mostrarError('imagenes', 'required')">Debes subir exactamente 2 imágenes.</div>
   </div>
 
-  <button type="submit">Registrar Paciente</button>
+  <div class="captcha-container">
+    <input appCaptcha (captchaValido)="captchaValido = $event" placeholder="Ingrese el código" class="form-control" />
+  </div>
+
+  <button type="submit" [disabled]="!captchaValido">Registrar Paciente </button>
 </form>

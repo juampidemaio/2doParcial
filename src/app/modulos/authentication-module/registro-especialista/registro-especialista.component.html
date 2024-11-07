@@ -1,75 +1,76 @@
 <form [formGroup]="especialistaForm" (ngSubmit)="guardarEspecialista()">
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" formControlName="nombre" />
-      <div *ngIf="mostrarError('nombre', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('nombre', 'pattern')">Solo se permiten letras.</div>
-    </div>
-  
-    <div>
-      <label for="apellido">Apellido:</label>
-      <input id="apellido" formControlName="apellido" />
-      <div *ngIf="mostrarError('apellido', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('apellido', 'pattern')">Solo se permiten letras.</div>
-    </div>
-  
-    <div>
-      <label for="edad">Edad:</label>
-      <input id="edad" type="number" formControlName="edad" />
-      <div *ngIf="mostrarError('edad', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('edad', 'min')">La edad mínima es 18 años.</div>
-      <div *ngIf="mostrarError('edad', 'max')">La edad máxima es 99 años.</div>
-    </div>
-  
-    <div>
-      <label for="dni">DNI:</label>
-      <input id="dni" formControlName="dni" />
-      <div *ngIf="mostrarError('dni', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('dni', 'pattern')">El DNI debe tener 8 dígitos.</div>
-    </div>
-  
-    <div>
-      <label for="especialidad">Especialidad:</label>
-      <select id="especialidad" formControlName="especialidad" (change)="onEspecialidadChange()">
-        <option value="" disabled selected>Seleccione una especialidad</option>
-        <option value="cardiologo">Cardiólogo</option>
-        <option value="oftalmologo">Oftalmólogo</option>
-        <option value="dermatologo">Dermatólogo</option>
-        <option value="pediatra">Pediatra</option>
-        <option value="ginecologo">Ginecólogo</option>
-        <option value="otro">Otro</option>
-      </select>
-      <div *ngIf="mostrarError('especialidad', 'required')">Este campo es obligatorio.</div>
-    </div>
-    
-    <div>
-      <label for="nuevaEspecialidad">Nueva Especialidad:</label>
-      <input id="nuevaEspecialidad" formControlName="nuevaEspecialidad" placeholder="Si no está en la lista, ingrésela aquí" />
-      <div *ngIf="mostrarError('nuevaEspecialidad', 'required')">Este campo es obligatorio si eliges "Otro".</div>
-    </div>
-    
-  
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" formControlName="email" />
-      <div *ngIf="mostrarError('email', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('email', 'email')">Formato de email inválido.</div>
-    </div>
-  
-    <div>
-      <label for="password">Contraseña:</label>
-      <input id="password" type="password" formControlName="password" />
-      <div *ngIf="mostrarError('password', 'required')">Este campo es obligatorio.</div>
-      <div *ngIf="mostrarError('password', 'minlength')">La contraseña debe tener al menos 6 caracteres.</div>
-    </div>
-  
-    <div>
-      <label for="imagen">Sube 1 imagen:</label>
-      <input type="file" (change)="agregarImagen($event)" />
-      <div *ngIf="mostrarError('imagenes', 'required')">Debes subir al menos 1 imagen.</div>
+  <div>
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" formControlName="nombre" />
+    <div *ngIf="mostrarError('nombre', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('nombre', 'pattern')">Solo se permiten letras.</div>
   </div>
-  
-  
-    <button type="submit">Registrar Especialista</button>
-  </form>
-  
+
+  <div>
+    <label for="apellido">Apellido:</label>
+    <input id="apellido" formControlName="apellido" />
+    <div *ngIf="mostrarError('apellido', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('apellido', 'pattern')">Solo se permiten letras.</div>
+  </div>
+
+  <div>
+    <label for="edad">Edad:</label>
+    <input id="edad" type="number" formControlName="edad" />
+    <div *ngIf="mostrarError('edad', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('edad', 'min')">La edad mínima es 18 años.</div>
+    <div *ngIf="mostrarError('edad', 'max')">La edad máxima es 99 años.</div>
+  </div>
+
+  <div>
+    <label for="dni">DNI:</label>
+    <input id="dni" formControlName="dni" />
+    <div *ngIf="mostrarError('dni', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('dni', 'pattern')">El DNI debe tener 8 dígitos.</div>
+  </div>
+
+  <div>
+    <label>Especialidades:</label>
+    <div *ngFor="let especialidad of especialidades">
+      <input type="checkbox" [value]="especialidad" (change)="onEspecialidadChange($event)" />
+      {{ especialidad }}
+  </div>  
+    <div *ngIf="especialidades.length === 0">
+        <p>No hay especialidades disponibles. Puedes agregar una nueva a continuación:</p>
+    </div>
+    <div *ngIf="mostrarError('especialidades', 'required')">Este campo es obligatorio.</div>
+</div>
+
+<div>
+    <label for="nuevaEspecialidad">Nueva Especialidad:</label>
+    <input id="nuevaEspecialidad" formControlName="nuevaEspecialidad" placeholder="Si no está en la lista, ingrésela aquí" />
+    <button type="button" (click)="agregarNuevaEspecialidad()">Agregar Nueva Especialidad</button>
+    <div *ngIf="mostrarError('nuevaEspecialidad', 'required')">Este campo es obligatorio si no hay especialidades disponibles.</div>
+</div>
+
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="mostrarError('email', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('email', 'email')">El formato del email es inválido.</div>
+  </div>
+
+  <div>
+    <label for="password">Contraseña:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div *ngIf="mostrarError('password', 'required')">Este campo es obligatorio.</div>
+    <div *ngIf="mostrarError('password', 'minlength')">La contraseña debe tener al menos 6 caracteres.</div>
+  </div>
+
+  <div>
+    <label for="imagenes">Imágenes:</label>
+    <input type="file" (change)="agregarImagen($event)" />
+    <div *ngIf="mostrarError('imagenes', 'required')">Se debe cargar una imagen.</div>
+  </div>
+
+  <div class="captcha-container">
+    <input appCaptcha (captchaValido)="captchaValido = $event" placeholder="Ingrese el código" class="form-control" />
+  </div>
+
+  <button type="submit" [disabled]="!captchaValido">Registrar Especialista</button>
+</form>

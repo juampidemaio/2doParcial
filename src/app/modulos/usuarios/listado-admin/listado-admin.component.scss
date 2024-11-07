@@ -1,0 +1,62 @@
+h2 {
+    color: #154360; /* Azul oscuro */
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem; /* Tamaño de fuente mayor */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF; /* Blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Asegurarse de que los bordes redondeados se vean */
+  }
+  
+  th, td {
+    padding: 1rem; /* Espaciado mayor para mejorar la legibilidad */
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #154360; /* Azul oscuro */
+    color: #FFFFFF; /* Blanco */
+  }
+  
+  thead th {
+    font-weight: bold;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 0.05em; /* Espaciado entre letras */
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Suaviza el hover */
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #F2F3F4; /* Gris claro */
+  }
+  
+  tbody tr:hover {
+    background-color: #D5E8E8; /* Azul claro al pasar el mouse */
+    transform: scale(1.01); /* Efecto de aumento sutil al hacer hover */
+  }
+  
+  tbody td {
+    border-bottom: 1px solid #F2F3F4; /* Gris claro */
+  }
+  /* Estilos para la columna "Estado" */
+td.habilitado {
+  color: #28a745; /* Verde */
+  font-weight: bold;
+}
+
+td.inhabilitado {
+  color: #dc3545; /* Rojo */
+  font-weight: bold;
+}
+
+  

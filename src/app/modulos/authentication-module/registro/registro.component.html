@@ -1,24 +1,40 @@
-<h2>Bienvenido al Registro</h2>
-<label for="tipoUsuario">Selecciona el tipo de usuario:</label>
-<select id="tipoUsuario" (change)="cambiarTipoUsuario($event)">
-    <option value="paciente">Paciente</option>
-    <option value="especialista">Especialista</option>
-    <option *ngIf="esAdmin" value="administrador">Administrador</option> <!-- Solo visible si esAdmin es true -->
-</select>
+<h2 class="registro-titulo">Bienvenido al Registro</h2>
 
+<div class="user-type-selection">
+  <button class="user-type-button" (click)="cambiarTipoUsuario('paciente')">
+    <img src="logoPaciente.png" alt="Paciente" />
+    <span>Paciente</span>
+  </button>
+
+  <button class="user-type-button" (click)="cambiarTipoUsuario('especialista')">
+    <img src="logoEspecialista.png" alt="Especialista" />
+    <span>Especialista</span>
+  </button>
+
+  <!-- Solo visible para el administrador -->
+  <button *ngIf="esAdmin" class="user-type-button" (click)="cambiarTipoUsuario('administrador')">
+    <img src="logoAdministrador.png" alt="Administrador" />
+    <span>Administrador</span>
+  </button>
+</div>
+
+<!-- Formularios correspondientes según el tipo de usuario seleccionado -->
 <div *ngIf="tipoUsuario === 'especialista'">
-    <h2>Registro del Especialista</h2>
-    <app-registro-especialista></app-registro-especialista>
+  <h2 class="registro-subtitulo">Registro del Especialista</h2>
+  <app-registro-especialista></app-registro-especialista>
 </div>
+
 <div *ngIf="tipoUsuario === 'paciente'">
-    <h2>Registro del Paciente</h2>
-    <app-registro-paciente></app-registro-paciente>
+  <h2 class="registro-subtitulo">Registro del Paciente</h2>
+  <app-registro-paciente></app-registro-paciente>
 </div>
+
 <div *ngIf="tipoUsuario === 'administrador'"> 
-    <h2>Registro del Administrador</h2>
-    <app-registro-admin></app-registro-admin>
+  <h2 class="registro-subtitulo">Registro del Administrador</h2>
+  <app-registro-admin></app-registro-admin>
 </div> 
-<div class="text-center mt-3" *ngIf="tipoUsuario != 'administrador'">
-    <span>¿ya tienes una cuenta?</span>
-    <a id="iniciar-sesion" class="text-decoration-none" (click)="goTo('/authentication/login')">iniciar sesion</a>
+
+<div class="text-center mt-3 cuenta-texto" *ngIf="tipoUsuario != 'administrador'">
+  <span>¿Ya tienes una cuenta?</span>
+  <a id="iniciar-sesion" class="text-decoration-none iniciar-sesion-link" (click)="goTo('/authentication/login')">Iniciar sesión</a>
 </div>

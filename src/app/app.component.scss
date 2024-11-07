@@ -1,63 +1,50 @@
+/* Estilos de la barra de navegación */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #ADD8E6; /* Azul celeste */
+    flex-wrap: wrap;
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
+    position: relative; /* Para facilitar posicionamiento si es necesario */
+    margin: 0; /* Elimina márgenes que puedan restringir el ancho */
+}
+
+/* Estilo del ícono */
+.navbar-icon {
+    border-radius: 50%;
+    width: 60px; /* Ajusta el tamaño del ícono según necesites */
+    height: 60px; /* Asegura que la altura sea igual al ancho para redondez */
+    margin-right: 15px; /* Espacio a la derecha del ícono */
+}
+
 /* Estilos generales de enlaces */
 a {
     text-decoration: none;
-    color: black;
+    color: #ffffff; /* Cambia el color del texto a blanco */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: burlywood;
-    border-radius: 10px; /* Reduce el borde redondeado */
-    padding: 3px 8px; /* Reduce el padding */
+    background-color: #3F9FD0; /* Color de fondo de los enlaces */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 5px 12px; /* Espaciado interno */
     transition: background-color 0.3s, transform 0.3s;
 }
 
 a:hover {
     cursor: pointer;
-    background-color: rgb(230, 171, 94);
-}
-
-/* Estilos de la barra de navegación */
-.navbar {
-    display: flex;
-    align-items: center;
-    padding: 10px; /* Reduce el padding de la barra de navegación */
-    flex-wrap: wrap;
+    background-color: #2C7A9A; /* Color más oscuro al pasar el ratón */
 }
 
 /* Estilos de los enlaces en la barra de navegación */
 .nav-link {
-    margin: 0 15px; /* Reduce el margen para evitar superposición */
-    font-size: 1em; /* Reduce el tamaño de fuente */
+    margin: 0 15px; /* Margen entre los enlaces */
+    font-size: 1em; /* Tamaño de fuente */
 }
 
 /* Enlaces a la derecha */
 .nav-links-derecha {
     margin-left: auto;
     display: flex;
-    gap: 20px; /* Reduce el espacio entre enlaces */
-}
-
-/* Estilos para usuarios normales */
-.nav-link-login, .nav-link-puntaje, .nav-link-logout, .nav-link-encuesta {
-    font-size: 1.2em; /* Reduce el tamaño de fuente */
-}
-
-/* Estilos para el administrador */
-.isAdmin .nav-link {
-    font-size: 0.9em; /* Tamaño más pequeño para el admin */
-    margin: 0 15px; /* Ajusta el margen para el admin */
-}
-
-.isAdmin .nav-links-derecha {
-    gap: 15px; /* Espacio reducido entre enlaces para admin */
-}
-
-/* Enlaces específicos */
-.nav-link-login, .nav-link-logout {
-    margin-right: 10px; /* Reduce el margen derecho */
-}
-
-/* Estilos específicos para el enlace de resultados de la encuesta */
-.nav-link-resultado {
-    font-size: 1em; /* Reduce el tamaño de fuente para resultados de encuesta */
+    gap: 20px; /* Espacio entre enlaces */
 }
 
 /* Media Queries para Responsividad */
@@ -103,9 +90,5 @@ a:hover {
 
     .nav-links-derecha {
         gap: 30px; /* Aumenta el espacio entre enlaces en la sección derecha */
-    }
-
-    .nav-link-login, .nav-link-logout, .nav-link-puntaje, .nav-link-encuesta {
-        font-size: 1.2em; /* Aumenta ligeramente el tamaño de fuente para enlaces en la sección derecha */
     }
 }
