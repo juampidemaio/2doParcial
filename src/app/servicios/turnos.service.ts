@@ -218,14 +218,57 @@ export class TurnoService {
     }
   }
 
-  async solicitarTurno(turnoData: any, idPaciente:any) {
-    const turnoRef = doc(this.firestore, `Turnos/${turnoData.horario}`); // Cambia 'horario' por el ID del turno si lo tienes
+  async solicitarTurno(turnoData: any, idPaciente: any) {
+    const turnoRef = doc(this.firestore, `Turnos/${turnoData.turnoId}`);
     await setDoc(turnoRef, {
-        ...turnoData,
-        estado: 'solicitado',
-        pacienteId: idPaciente 
+      ...turnoData,
+      estado: 'solicitado',
+      pacienteId: idPaciente,
     }, { merge: true });
   }
+  async buscarYActualizarTurno(turnoData: any, idPaciente: any) {
+    try {
+
+        // Validamos que los datos necesarios estén definidos
+        console.log(turnoData.fecha, turnoData.horaInicio, turnoData.horaFin)
+    if (!turnoData.fecha || !turnoData.horaInicio || !turnoData.horaFin) {
+      Swal.fire('Error', 'Faltan datos para realizar la búsqueda del turno.', 'error');
+      return;
+    }
+      // Realizar una consulta para buscar el turno que coincida con la fecha y la hora
+      const q = query(
+        collection(this.firestore, 'Turnos'),
+        where('fecha', '==', turnoData.fecha),
+        where('hora_inicio', '==', turnoData.horaInicio),
+        where('hora_fin', '==', turnoData.horaFin)
+      );
+  
+      // Obtener los turnos que coinciden con la búsqueda
+      const querySnapshot = await getDocs(q);
+  
+      if (!querySnapshot.empty) {
+        // Si se encuentra el turno, actualizarlo con el nuevo estado y paciente
+        const turnoDoc = querySnapshot.docs[0];  // Tomamos el primer turno que coincida
+        const turnoRef = doc(this.firestore, `Turnos/${turnoDoc.id}`);
+  
+        await setDoc(turnoRef, {
+          ...turnoData,
+          estado: 'solicitado',
+          pacienteId: idPaciente,
+        }, { merge: true });
+  
+        console.log("Turno actualizado correctamente");
+      } else {
+        // Si no se encuentra el turno, puedes manejarlo como un error o crear un nuevo turno
+        console.error("No se encontró el turno para la fecha y hora seleccionada");
+        Swal.fire('Error', 'No se encontró un turno disponible en esa fecha y hora.', 'error');
+      }
+    } catch (error) {
+      console.error('Error al buscar y actualizar el turno:', error);
+      Swal.fire('Error', 'No se pudo actualizar el turno. Inténtalo nuevamente.', 'error');
+    }
+  }
+  
 
   async cancelarTurno(turnoId: string, motivo: string) {
     const turnoRef = doc(this.firestore, `Turnos/${turnoId}`);
@@ -272,9 +315,10 @@ export class TurnoService {
     const nombreEspecialista = turno.especialista;
     const fechaTurno = turno.fecha; // Fecha del turno
     const idEspecialista = turno.especialista_id;
+    const turnoId = turno.turnoId;
   
     // Generar un ID único para el turno usando la fecha y la especialidad
-    const turnoId = `turno_${fechaTurno}_${especialidad}`;
+    const turnoIdCampo = `turno_${fechaTurno}_${especialidad}`;
   
     // Referencia al documento del paciente en la colección `historiaClinica`
     const pacienteRef = doc(this.firestore, `historiaClinica/${pacienteId}`);
@@ -282,11 +326,12 @@ export class TurnoService {
     // Crear o actualizar el documento del paciente con el nuevo turno
     await setDoc(pacienteRef, {
       turnos: {
-        [turnoId]: {
+        [turnoIdCampo]: {
           especialidad,
           nombreEspecialista,
           idEspecialista,
           fechaTurno,
+          turnoId,
           ...historiaClinica // Datos de altura, peso, temperatura, etc.
         }
       }
@@ -387,5 +432,95 @@ export class TurnoService {
       calificacionTurno: calificacion 
     }, { merge: true });
   }
+
+
+  async filtrarTurnosPorCampoClinica(pacienteId: string, campoBusqueda: any, valor: any): Promise<Record<string, any>> {
+    try {
+      console.log("esto es lo que traemos", pacienteId, campoBusqueda, valor);
+  
+      const pacienteRef = doc(this.firestore, `historiaClinica/${pacienteId}`);
+      const pacienteDoc = await getDoc(pacienteRef);
+  
+      if (pacienteDoc.exists()) {
+        const data = pacienteDoc.data();
+        console.log('Datos del paciente:', data); // Verificar los datos
+        const turnos: Record<string, any> = data?.['turnos'] || {}; // Turnos como objeto de claves dinámicas
+  
+        let turnosFiltrados: Record<string, any> = {}; // Cambié aquí para guardar todos los turnos filtrados
+  
+        for (const turnoId in turnos) {
+          const turno = turnos[turnoId];
+          const coincideConHistoriaClinica = turno[campoBusqueda] == valor;
+          const coincideConDatosDinamicos = turno.datosDinamicos?.some((dato: any) => dato.clave == campoBusqueda && dato.valor == valor);
+  
+          if (coincideConHistoriaClinica || coincideConDatosDinamicos) {
+            console.log('Coincidencia encontrada para turno:', turno);
+  
+            // Ahora buscar el detalle del turno en la colección Turnos
+            const turnoRef = doc(this.firestore, `Turnos/${turno.turnoId}`);
+            const turnoSnapshot = await getDoc(turnoRef);
+  
+            if (turnoSnapshot.exists()) {
+              turnosFiltrados[turnoId] = turnoSnapshot.data(); // Agregar el documento completo de turno
+            } else {
+              console.log(`No se encontró el turno con ID: ${turnoId}`);
+            }
+          }
+        }
+  
+        if (Object.keys(turnosFiltrados).length === 0) {
+          console.log('No se encontraron turnos que coincidan.');
+        }
+  
+        return turnosFiltrados;
+      } else {
+        console.log('No existe la historia clínica del paciente.');
+      }
+  
+      return {};
+    } catch (error) {
+      console.error('Error al filtrar turnos:', error);
+      throw error;
+    }
+  }
+  
+  
+  
+
+
+  async filtrarTurnosPorCampoTurnos(pacienteId: string, campoBusqueda: string, valor: any): Promise<Record<string, any>> {
+    try {
+      // Referencia a la colección Turnos
+      const turnosRef = collection(this.firestore, 'Turnos');
+  
+      // Filtrar inicialmente por pacienteId
+      const pacienteQuery = query(turnosRef, where('pacienteId', '==', pacienteId));
+      const pacienteSnapshot = await getDocs(pacienteQuery);
+  
+      // Filtrar más por campo específico (si aplica)
+      const turnosFiltrados: Record<string, any> = {};
+      pacienteSnapshot.forEach((doc) => {
+        const turnoData = doc.data();
+        
+        // Si el campo de búsqueda y valor coinciden, incluir el turno
+        if (campoBusqueda && turnoData[campoBusqueda] === valor) {
+          turnosFiltrados[doc.id] = turnoData;
+        } else if (!campoBusqueda) {
+          // Si no se especifica campo de búsqueda, incluir todos los turnos del paciente
+          turnosFiltrados[doc.id] = turnoData;
+        }
+      });
+  
+      return turnosFiltrados;
+    } catch (error) {
+      console.error('Error al filtrar turnos:', error);
+      throw error;
+    }
+  }
+  
+  
+  
+  
+
 
 }

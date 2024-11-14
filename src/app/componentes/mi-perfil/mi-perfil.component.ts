@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../servicios/authentication.service';
 import { DetalleUsuariosComponent } from '../../modulos/usuarios/detalle-usuarios/detalle-usuarios.component';
 import { UsuariosModule } from '../../modulos/usuarios/usuarios.module';
 import { TurnoService } from '../../servicios/turnos.service';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -74,5 +75,80 @@ export class MiPerfilComponent {
       this.esAdministrador = true;
     }
   }
+  generarPDF(): void {
+    const doc = new jsPDF();
+    
+    // Agregar logo en la primera página, en la parte superior izquierda
+    const logo = new Image();
+    logo.src = 'favicon.ico'; // Ruta al logo
+    logo.onload = () => {
+      // Coloca la imagen solo una vez, en la primera página
+      doc.addImage(logo, 'PNG', 10, 10, 30, 20);
+  
+      // Título del informe y fecha
+      doc.setFontSize(16);
+      doc.text('Historia Clínica', 70, 20);
+      doc.setFontSize(12);
+      doc.text(`Fecha de emisión: ${new Date().toLocaleDateString()}`, 70, 30);
+  
+      // Información del usuario
+      doc.text(`Paciente: ${this.usuario.nombre} ${this.usuario.apellido}`, 10, 50);
+      doc.text(`DNI: ${this.usuario.dni}`, 10, 60);
+      doc.text(`Email: ${this.usuario.email}`, 10, 70);
+    
+      let y = 80;
+    
+      // Agregar información de cada turno
+      for (let key of this.objectKeys(this.turnos)) {
+        const turno = this.turnos[key];
+        
+        doc.setFontSize(14);
+        doc.text(`Turno de ${turno.especialidad}`, 10, y);
+        doc.setFontSize(12);
+        y += 10;
+    
+        doc.text(`Especialidad: ${turno.especialidad}`, 10, y);
+        doc.text(`Especialista: ${turno.nombreEspecialista}`, 10, y + 10);
+        doc.text(`Fecha: ${turno.fechaTurno}`, 10, y + 20);
+        doc.text(`Altura: ${turno.altura} cm`, 10, y + 30);
+        doc.text(`Peso: ${turno.peso} kg`, 10, y + 40);
+        doc.text(`Temperatura: ${turno.temperatura} °C`, 10, y + 50);
+        doc.text(`Presión: ${turno.presion} mmHg`, 10, y + 60);
+        y += 70;
+    
+        // Datos dinámicos
+        if (turno.datosDinamicos && turno.datosDinamicos.length > 0) {
+          doc.text('Otros Datos:', 10, y);
+          y += 10;
+    
+          turno.datosDinamicos.forEach((dato: any) => {
+            doc.text(`${dato.clave}: ${dato.valor}`, 10, y);
+            y += 10;
+    
+            if (y > 280) {  // Verifica si se necesita una nueva página
+              doc.addPage();
+              y = 10;
+            }
+          });
+        }
+    
+        y += 10;
+    
+        if (y > 280) {  // Verifica si se necesita una nueva página
+          doc.addPage();
+          y = 10;
+        }
+      }
+  
+      // Guardar el documento con el nombre
+      doc.save(`HistoriaClinica_${this.usuario.nombre}.pdf`);
+    };
+  
+    logo.onerror = () => {
+      console.warn('Error cargando la imagen del logo');
+      doc.save(`HistoriaClinica_${this.usuario.nombre}.pdf`); // Guarda el PDF sin el logo si hay error
+    };
+  }
+  
 
 }

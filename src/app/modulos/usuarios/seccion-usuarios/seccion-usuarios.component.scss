@@ -22,6 +22,15 @@ app-registro {
   margin-bottom: 1rem; /* Espacio inferior entre los componentes */
 }
 
+/* Ajustes de tamaño para el componente de detalle de usuarios */
+app-detalle-usuarios {
+  margin-top: 20px;
+  max-height: 570px; /* Limita la altura máxima */
+  overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+
 /* Contenedor de botones */
 .botones-container {
   display: flex; /* Usamos flexbox para alinear los botones */

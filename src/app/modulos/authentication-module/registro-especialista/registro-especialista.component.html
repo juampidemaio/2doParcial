@@ -42,10 +42,13 @@
 
 <div>
     <label for="nuevaEspecialidad">Nueva Especialidad:</label>
-    <input id="nuevaEspecialidad" formControlName="nuevaEspecialidad" placeholder="Si no está en la lista, ingrésela aquí" />
+    <input type="text" formControlName="nuevaEspecialidad" placeholder="Nueva especialidad">
+    <input type="file" (change)="agregarNuevaEspecialidad($event)"> 
     <button type="button" (click)="agregarNuevaEspecialidad()">Agregar Nueva Especialidad</button>
     <div *ngIf="mostrarError('nuevaEspecialidad', 'required')">Este campo es obligatorio si no hay especialidades disponibles.</div>
 </div>
+
+
 
 
   <div>
@@ -68,9 +71,29 @@
     <div *ngIf="mostrarError('imagenes', 'required')">Se debe cargar una imagen.</div>
   </div>
 
+    <!-- Captcha -->
+  <!-- <div class="captcha-container" style="width: 300px; height: 300px;">
+    <div *ngIf="!captchaValido">
+      <div appRecaptcha [imageSrc]="'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Jaguar_at_Edinburgh_Zoo.jpg/300px-Jaguar_at_Edinburgh_Zoo.jpg'" [rows]="3" [cols]="3" (solved)="onCaptchaResolved($event)"></div>
+    </div>
+    <div *ngIf="captchaValido">
+      <span>Captcha completado con éxito</span>
+    </div>
+  </div> -->
+    
+  
   <div class="captcha-container">
-    <input appCaptcha (captchaValido)="captchaValido = $event" placeholder="Ingrese el código" class="form-control" />
-  </div>
+    <div *ngIf="!captchaValido">
+      <!-- Usamos el reCAPTCHA v2 con la directiva recaptcha -->
+      <re-captcha 
+      siteKey="6LeSo3oqAAAAAIQ5hamDg0b7J9m9D7QuO2Jj0fXc"
+      (resolved)="onCaptchaResolved($event)">
+      </re-captcha>
 
+    </div>
+    <div *ngIf="captchaValido">
+      <span>Captcha completado con éxito</span>
+    </div>
+  </div>
   <button type="submit" [disabled]="!captchaValido">Registrar Especialista</button>
 </form>

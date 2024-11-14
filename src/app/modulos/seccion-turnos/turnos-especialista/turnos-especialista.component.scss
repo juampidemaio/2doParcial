@@ -1,93 +1,146 @@
 /* Estilos para el título */
 h2 {
-    color: #154360; /* Azul oscuro */
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-  
-  /* Estilos para los selectores */
-  label {
-    font-weight: bold;
-    color: #154360;
-    margin-right: 0.5rem;
-  }
-  
-  select {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #D5D8DC;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  select:focus {
-    border-color: #154360;
-  }
-  
-  /* Estilos para la tabla */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  th, td {
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  thead {
-    background-color: #154360; /* Azul oscuro */
-    color: #FFFFFF;
-  }
-  
-  thead th {
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  tbody tr {
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  tbody tr:nth-child(even) {
-    background-color: #F2F3F4; /* Gris claro */
-  }
-  
-  tbody tr:hover {
-    background-color: #D5E8E8; /* Azul claro */
-    transform: scale(1.01);
-  }
-  
-  tbody td {
-    border-bottom: 1px solid #F2F3F4;
-  }
-  
- /* Estilos para los botones */
+  color: #154360; /* Azul oscuro */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+/* Estilos para los labels */
+label {
+  font-weight: bold;
+  color: #154360;
+  margin-right: 0.5rem;
+}
+
+/* Estilos para los inputs de radio */
+input[type="radio"] {
+  accent-color: #154360; /* Color del checkbox */
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+input[type="radio"]:hover {
+  transform: scale(1.1);
+}
+
+/* Estilos para el select */
+select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #D5D8DC;
+  margin-bottom: 1.5rem;
+  margin-right: 1rem;
+  outline: none;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #154360;
+  background-color: #eef6f7; /* Fondo cuando se selecciona */
+}
+
+/* Estilos para el input de texto */
+input[type="text"] {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #D5D8DC;
+  margin-bottom: 1.5rem;
+  outline: none;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #154360;
+  background-color: #eef6f7;
+}
+
+/* Estilos para el botón de búsqueda */
+button[type="submit"] {
+  padding: 0.8rem 2rem;
+  background-color: #154360;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #1E4F6D; /* Tono más oscuro */
+  transform: scale(1.05);
+}
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+}
+
+thead {
+  background-color: #154360; /* Azul oscuro */
+  color: #FFFFFF;
+}
+
+thead th {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody tr {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #F2F3F4; /* Gris claro */
+}
+
+tbody tr:hover {
+  background-color: #D5E8E8; /* Azul claro */
+  transform: scale(1.01);
+}
+
+tbody td {
+  border-bottom: 1px solid #F2F3F4;
+}
+
+/* Estilos para los botones de acción */
 button {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   font-size: 0.9rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   color: #FFFFFF;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   width: 100%;
 }
-button.aceptar, button.finalizar, button.realizado{
-  background-color: #b0e915; 
+
+button.realizado, button.encuesta, button.calificacion {
+  margin-bottom: 5px;
+  background-color: #b0e915;
 }
-button.aceptar:hover, button.finalizar:hover, button.realizado:hover {
-  background-color: #82b825; 
+
+button.realizado:hover, button.encuesta:hover, button.calificacion:hover {
+  background-color: #82b825;
   transform: scale(1.05);
 }
 
@@ -100,13 +153,55 @@ button.cancelar:hover {
   transform: scale(1.05);
 }
 
-  /* Estado de turno */
-  td.estado {
-    font-weight: bold;
-    color: #1E8449; /* Verde para habilitado */
-  }
-  
-  td.estado.inhabilitado {
-    color: #C0392B; /* Rojo para inhabilitado */
-  }
-  
+/* Estilos para el estado de turno */
+td.estado {
+  font-weight: bold;
+  color: #1E8449; /* Verde para habilitado */
+}
+
+td.estado.inhabilitado {
+  color: #C0392B; /* Rojo para inhabilitado */
+}
+
+/* Ajustes generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+}
+
+form label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+form input,
+form select {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+form button {
+  background-color: #1e8449;
+  font-size: 1.1rem;
+  width: auto;
+  margin-top: 1rem;
+  padding: 0.8rem 1.6rem;
+}
+
+form button:hover {
+  background-color: #2d6a3e;
+}

@@ -7,14 +7,22 @@
   <button (click)="mostrarListado('admin')" [ngClass]="{ active: listadoSeleccionado === 'admin' }">Listado Administradores</button>
 </div>
 
-<div class="usuarios-container" *ngIf="!registroVisible">
-  <!-- Componente de Listado de Usuarios -->
-  <app-listado-especialista *ngIf="listadoSeleccionado === 'especialista'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-especialista>
-  <app-listado-paciente *ngIf="listadoSeleccionado === 'paciente'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-paciente>
-  <app-listado-admin *ngIf="listadoSeleccionado === 'admin'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-admin>
+<div [@routeAnimations]>
+  <div class="usuarios-container" *ngIf="!registroVisible">
+    <!-- Componente de Listado de Usuarios -->
+    <app-listado-especialista *ngIf="listadoSeleccionado === 'especialista'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-especialista>
+    <app-listado-paciente *ngIf="listadoSeleccionado === 'paciente'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-paciente>
+    <app-listado-admin *ngIf="listadoSeleccionado === 'admin'" (usuarioSeleccionado)="mostrarDetalles($event)"></app-listado-admin>
 
-  <!-- Componente de Detalle de Usuarios -->
-  <app-detalle-usuarios *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalle-usuarios>
+    <!-- Componente de Detalle de Usuarios -->
+    <app-detalle-usuarios *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalle-usuarios>
+
+    <!-- Botón para descargar Excel, visible solo para el perfil de Administrador -->
+  <!-- Botón para descargar Excel -->
+  <button *ngIf="usuarioSeleccionado" (click)="exportarUsuarios()" class="download-button">
+    Descargar Excel
+  </button>
+  </div>
 </div>
 
 <!-- Botón para mostrar/ocultar el registro -->
@@ -26,3 +34,5 @@
 
 <!-- Componente de Registro de Usuarios -->
 <app-registro *ngIf="registroVisible"></app-registro>
+
+<router-outlet></router-outlet>

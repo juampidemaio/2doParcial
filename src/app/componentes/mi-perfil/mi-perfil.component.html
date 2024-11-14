@@ -67,5 +67,10 @@
       </div>
     </div>
   </div>
+  
+  <button *ngIf="esPaciente && turnos" (click)="generarPDF()" class="download-button">
+    Descargar Historia Clínica en PDF
+  </button>
+  
 
 </div>

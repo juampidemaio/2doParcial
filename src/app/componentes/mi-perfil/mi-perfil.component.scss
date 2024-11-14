@@ -71,7 +71,7 @@
   
 
   /* Botón para alternar la visibilidad */
-  .toggle-button {
+  .toggle-button,.download-button {
     background-color: #1E8449;
     color: white;
     border: none;
@@ -81,14 +81,15 @@
     margin-top: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 20px;
   }
 
-  .toggle-button:hover {
+  .toggle-button:hover,.download-button:hover {
       background-color: #154360;
       transform: scale(1.05);
     }
 
-    .toggle-button:focus {
+    .toggle-button:focus,.download-button:focus {
       outline: none;
       box-shadow: 0 0 0 3px rgba(30, 132, 73, 0.3);
     }

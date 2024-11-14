@@ -14,7 +14,8 @@ export class RegistroAdminComponent {
   adminForm: FormGroup;
   private readonly allowedFileTypes: string[] = ['image/jpeg', 'image/png', 'image/gif']; // Tipos de archivo permitidos
   private readonly maxFileSize: number = 2 * 1024 * 1024; // 2 MB en bytes
-  captchaValido: boolean = false; // Variable para almacenar el estado del captcha
+  captchaValido: boolean = false;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -123,4 +124,16 @@ export class RegistroAdminComponent {
       Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
     }
   }
+  
+  onCaptchaResolved(captchaResponse: any): void {
+    if (captchaResponse) {
+      this.captchaValido = true;
+      Swal.fire('Captcha validado', 'Captcha verificado correctamente', 'success');
+    } else {
+      this.captchaValido = false;
+      Swal.fire('Captcha inválido', 'Por favor, resuelve el CAPTCHA correctamente', 'error');
+    }
+  }
+
+  
 }

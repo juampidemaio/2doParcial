@@ -20,6 +20,10 @@ export class TurnosEspecialistaComponent {
   especialistaIniciado: any;
   pacienteSeleccionadoId: string = ''; 
 
+  filtroCampo: string = '';  // Campo seleccionado en el filtro
+  filtroValor: string = '';  // Valor ingresado para el filtros
+ 
+
   constructor(
     private turnoService: TurnoService,
     private especialistaService: EspecialistaService,
@@ -131,13 +135,13 @@ export class TurnosEspecialistaComponent {
 
   async aceptarTurno(turno: any) {
     if (['Aceptado', 'Realizado', 'Rechazado'].includes(turno.estado)) {
-      Swal.fire('Aviso', 'No se puede cancelar un turno aceptado, realizado o rechazado', 'info');
+      Swal.fire('Aviso', 'No se puede aceptar un turno ya aceptado, realizado o rechazado', 'info');
       return;
     }
   
-    const { isConfirmed} = await Swal.fire({
+    const { isConfirmed } = await Swal.fire({
       title: '¿Estás seguro de aceptar el turno?',
-      confirmButtonText: 'aceptar turno',
+      confirmButtonText: 'Aceptar turno',
       showCancelButton: true,
       cancelButtonText: 'Volver',
     });
@@ -145,15 +149,16 @@ export class TurnosEspecialistaComponent {
     if (isConfirmed) {
       try {
         await this.turnoService.aceptarTurno(turno.id);
-        Swal.fire('aceptado', 'El turno ha sido aceptado con éxito', 'success');
+        Swal.fire('Aceptado', 'El turno ha sido aceptado con éxito', 'success');
+  
         // Actualiza el listado de turnos para el paciente y especialidad seleccionados
-        //this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
+        this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
       } catch (error) {
         Swal.fire('Error', 'No se pudo aceptar el turno', 'error');
       }
     }
   }
-
+  
   async finalizarTurno(turno: any) {
     if (turno.estado !== 'aceptado') {
       Swal.fire('Aviso', 'Solo puedes finalizar un turno aceptado', 'info');
@@ -291,6 +296,47 @@ export class TurnosEspecialistaComponent {
   }
 }
   
+
+async buscarTurnos() {
+  if (!this.filtroCampo || !this.filtroValor) {
+    Swal.fire('Error', 'Por favor, complete ambos campos de filtro.', 'error');
+    return;
+  }
+
+  try {
+    let turnosFiltrados;
+
+    // Verifica si el campo pertenece a la historia clínica
+    const camposHistoriaClinica = ['temperatura', 'altura', 'peso', 'presion'];
+    if (camposHistoriaClinica.includes(this.filtroCampo)) {
+      console.log("entro a la clinica");
+      // Filtrar turnos basados en la historia clínica
+      turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoClinica(
+        this.pacienteSeleccionadoId,
+        this.filtroCampo,
+        this.filtroValor
+      );
+    } else {
+      // Filtrar turnos en base a la colección de turnos
+      turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoTurnos(
+        this.pacienteSeleccionadoId,
+        this.filtroCampo,
+        this.filtroValor
+      );
+    }
+
+    // Mapea los resultados al formato necesario
+    this.horarios = Object.values(turnosFiltrados);
+    this.filtroCampo="";
+    this.filtroValor="";
+
+  } catch (error) {
+    console.error('Error al buscar turnos:', error);
+    Swal.fire('Error', 'No se pudieron cargar los turnos', 'error');
+  }
+}
+
+
   
 
 

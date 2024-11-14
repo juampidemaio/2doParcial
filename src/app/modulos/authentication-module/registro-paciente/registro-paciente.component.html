@@ -54,8 +54,28 @@
       <div *ngIf="mostrarError('imagenes', 'required')">Debes subir exactamente 2 imágenes.</div>
   </div>
 
+  <!-- Captcha -->
+  <!-- <div class="captcha-container" style="width: 240px; height: 300px; position: relative;">
+    <div *ngIf="!captchaValido">
+      <div appRecaptcha [imageSrc]="'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Jaguar_at_Edinburgh_Zoo.jpg/300px-Jaguar_at_Edinburgh_Zoo.jpg'" [rows]="3" [cols]="3" (solved)="onCaptchaResolved($event)"></div>
+    </div>
+    <div *ngIf="captchaValido">
+      <span>Captcha completado con éxito</span>
+    </div>
+  </div> -->
+
   <div class="captcha-container">
-    <input appCaptcha (captchaValido)="captchaValido = $event" placeholder="Ingrese el código" class="form-control" />
+    <div *ngIf="!captchaValido">
+      <!-- Usamos el reCAPTCHA v2 con la directiva recaptcha -->
+      <re-captcha 
+      siteKey="6LeSo3oqAAAAAIQ5hamDg0b7J9m9D7QuO2Jj0fXc"
+      (resolved)="onCaptchaResolved($event)">
+      </re-captcha>
+
+    </div>
+    <div *ngIf="captchaValido">
+      <span>Captcha completado con éxito</span>
+    </div>
   </div>
 
   <button type="submit" [disabled]="!captchaValido">Registrar Paciente </button>

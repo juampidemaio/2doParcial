@@ -20,6 +20,24 @@ import { async } from 'rxjs';
     return especialistas;
     }
 
+
+    async getEspecialistas(): Promise<any[]> {
+      // Definir la colección de usuarios
+      const usuariosCollection = collection(this.firestore, 'users');
+    
+      // Crear una consulta que filtre los usuarios cuyo rol sea "especialista"
+      const especialistasQuery = query(usuariosCollection, where('role', '==', 'especialista'));
+    
+      // Obtener los documentos que coincidan con la consulta
+      const usuariosSnapshot = await getDocs(especialistasQuery);
+    
+      // Mapear los resultados y extraer la información
+      const especialistas = usuariosSnapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }));
+    
+      console.log("Especialistas filtrados:", especialistas); // Verifica los especialistas filtrados
+      return especialistas;
+    }
     
     private especialistaValido(usuario: any, nombreEspecialidad: string): boolean {
       // Verifica si el usuario es especialista y si el campo de especialidades incluye el nombre

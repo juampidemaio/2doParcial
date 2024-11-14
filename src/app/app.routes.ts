@@ -6,9 +6,9 @@ import { MisHorariosComponent } from './componentes/mis-horarios/mis-horarios.co
 
 export const routes: Routes = [
     { path: '', redirectTo: '/bienvenida', pathMatch: "full" },
-    { path: 'bienvenida', component: BienvenidaComponent },
-    { path: 'mi-perfil', component: MiPerfilComponent },
-    { path: 'mis-horarios', component: MisHorariosComponent },
+    { path: 'bienvenida', component: BienvenidaComponent, data: { animation: 'BienvenidaPage' } },
+    { path: 'mi-perfil', component: MiPerfilComponent, data: { animation: 'MiPerfilPage' } },
+    { path: 'mis-horarios', component: MisHorariosComponent, data: { animation: 'MisHorariosPage' } },
     { 
         path:"authentication",
         loadChildren: () => import('./modulos/authentication-module/authentication-module.module').then(m => m.authenticationModuleModule)
@@ -24,3 +24,4 @@ export const routes: Routes = [
     },
 
 ];
+

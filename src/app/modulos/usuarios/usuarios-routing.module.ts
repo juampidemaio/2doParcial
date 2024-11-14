@@ -5,8 +5,8 @@ import { SeccionPacientesComponent } from './seccion-pacientes/seccion-pacientes
 import { AdminGuard } from '../../guard/admin.guard';
 
 const routes: Routes = [
-  {path:"seccion-usuarios", component: SeccionUsuariosComponent, canActivate: [AdminGuard]},
-  {path:"seccion-pacientes", component: SeccionPacientesComponent},
+  {path:"seccion-usuarios", component: SeccionUsuariosComponent, canActivate: [AdminGuard],data: { animation: 'seccion-usuarios' } },
+  {path:"seccion-pacientes", component: SeccionPacientesComponent,  data: { animation: 'seccion-pacientes' } }
 ];
 
 @NgModule({

@@ -11,6 +11,26 @@
   {{ especialista.nombre }} {{ especialista.apellido }}
 </div>
 
+
+<form (ngSubmit)="buscarTurnos()">
+  <label for="campo">Filtrar por:</label>
+  <select id="campo" [(ngModel)]="filtroCampo" name="campo">
+    <option value="fecha">Fecha</option>
+    <option value="estado">Estado</option>
+    <!-- Campos de la historia clínica -->
+    <option value="temperatura">temperatura</option>
+    <option value="altura">altura</option>
+    <option value="peso">Peso</option>
+    <option value="presion">presion</option>
+  </select>
+
+  <label for="valor">Valor:</label>
+  <input type="text" id="valor" [(ngModel)]="filtroValor" name="valor" />
+
+  <button type="submit">Buscar</button>
+</form>
+
+
 <table>
   <thead>
     <tr>
@@ -30,7 +50,7 @@
       <td>{{ horario.dni }}</td>
       <td>{{ horario.paciente }}</td>
       <td>{{ horario.obraSocial }}</td>
-      <td>{{ nombreEspecialista }}</td>
+      <td>{{ horario.especialista }}</td>
       <td>{{ horario.especialidad }}</td>
       <td>{{ horario.fecha }}</td>
       <td>{{ horario.hora_inicio }} - {{ horario.hora_fin }}</td>

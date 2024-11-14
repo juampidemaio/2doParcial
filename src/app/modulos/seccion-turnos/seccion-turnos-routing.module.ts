@@ -11,14 +11,39 @@ import { TurnosPacientesComponent } from './turnos-pacientes/turnos-pacientes.co
 import { pacienteGuard } from '../../guard/paciente.guard';
 
 
-
-const routes: Routes = [  {path:"solicitar-turno", component: SolicitarTurnoComponent, canActivate: [AdminOrPacienteGuard]},
-{path:"gestionar-horarios", component: GestionHorariosComponent, canActivate: [AdminGuard]},
-{path:"gestionar-turnos", component: GestionarTurnosComponent, canActivate: [AdminGuard]},
-{path:"turnos-especialista", component: TurnosEspecialistaComponent, canActivate: [EspecialistaGuard]},
-{path:"turnos-pacientes", component: TurnosPacientesComponent, canActivate: [pacienteGuard]},
-
+const routes: Routes = [
+  { 
+    path: "solicitar-turno", 
+    component: SolicitarTurnoComponent, 
+    canActivate: [AdminOrPacienteGuard],
+    data: { animation: 'solicitarTurnoPage' }
+  },
+  { 
+    path: "gestionar-horarios", 
+    component: GestionHorariosComponent, 
+    canActivate: [AdminGuard],
+    data: { animation: 'gestionarHorariosPage' }
+  },
+  { 
+    path: "gestionar-turnos", 
+    component: GestionarTurnosComponent, 
+    canActivate: [AdminGuard],
+    data: { animation: 'gestionarTurnosPage' }
+  },
+  { 
+    path: "turnos-especialista", 
+    component: TurnosEspecialistaComponent, 
+    canActivate: [EspecialistaGuard],
+    data: { animation: 'turnosEspecialistaPage' }
+  },
+  { 
+    path: "turnos-pacientes", 
+    component: TurnosPacientesComponent, 
+    canActivate: [pacienteGuard],
+    data: { animation: 'turnosPacientesPage' }
+  },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

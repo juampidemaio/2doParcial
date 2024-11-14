@@ -18,7 +18,8 @@ export class TurnosPacientesComponent {
   nombreEspecialista: any;
   especialidadSeleccionada: string = ''; // Nueva variable para la especialidad seleccionada
   encuesta: any = {}; // Objeto para almacenar respuestas de la encuesta
-  
+  filtroCampo: string = '';  // Campo seleccionado en el filtro
+  filtroValor: string = '';  // Valor ingresado para el filtros
   pacienteActual: any = ''; 
 
   constructor(
@@ -191,6 +192,44 @@ export class TurnosPacientesComponent {
       
       // Recargar lista de turnos
       await this.onEspecialistaChange({ target: { value: turno.especialistaId } } as unknown as Event, { nombre: turno.nombreEspecialista, apellido: turno.apellidoEspecialista });
+    }
+  }
+
+  async buscarTurnos() {
+    if (!this.filtroCampo || !this.filtroValor) {
+      Swal.fire('Error', 'Por favor, complete ambos campos de filtro.', 'error');
+      return;
+    }
+  
+    try {
+      let turnosFiltrados;
+  
+      // Verifica si el campo pertenece a la historia clínica
+      const camposHistoriaClinica = ['temperatura', 'altura', 'peso', 'presion'];
+      if (camposHistoriaClinica.includes(this.filtroCampo)) {
+        console.log("entro a la clinica");
+        // Filtrar turnos basados en la historia clínica
+        turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoClinica(
+          this.pacienteActual.uid,
+          this.filtroCampo,
+          this.filtroValor
+        );
+      } else {
+        // Filtrar turnos en base a la colección de turnos
+        turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoTurnos(
+          this.pacienteActual.uid,
+          this.filtroCampo,
+          this.filtroValor
+        );
+      }
+  
+      // Mapea los resultados al formato necesario
+      this.horarios = Object.values(turnosFiltrados);
+      this.filtroCampo="";
+      this.filtroValor="";
+    } catch (error) {
+      console.error('Error al buscar turnos:', error);
+      Swal.fire('Error', 'No se pudieron cargar los turnos', 'error');
     }
   }
   

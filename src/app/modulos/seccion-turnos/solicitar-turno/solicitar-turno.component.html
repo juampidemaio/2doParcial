@@ -1,33 +1,50 @@
 <form [formGroup]="turnoForm" (ngSubmit)="solicitarTurno()">
-    
-    <label for="especialidad">Especialidad:</label>
-    <select id="especialidad" formControlName="especialidad" (change)="onEspecialidadChange($event)">
-    <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
-    </select>
+  <!-- Mostrar especialistas en botones redondos -->
+  <label for="especialista">Especialista:</label>
+  <div class="profesionales-container">
+    <div *ngFor="let especialista of especialistas" class="profesional" (click)="onEspecialistaChange(especialista)">
+      <span class="profesional-nombre">{{especialista.nombre}} {{especialista.apellido}}</span>
+      <img [src]="especialista.imageUrl" alt="{{especialista.nombre}}" class="profesional-img" />
+    </div>
+  </div>
 
-    <label for="especialista">Especialista:</label>
-    <select id="especialista" formControlName="especialista" (change)="onEspecialistaChange($event)">
-      <option *ngFor="let especialista of especialistas" [value]="especialista.uid"  (nombreEspecialista)="especialista">{{ especialista.nombre }}</option>
-    </select>
-  
-    <label for="horario">Horario:</label>
-    <select id="horario" formControlName="horario">
-      <option *ngFor="let horario of horarios" [value]="horario.id">{{ horario.fecha }} - {{ horario.hora_inicio }}hs hasta {{ horario.hora_fin }}hs</option>
-    </select>
-  
-    <div *ngIf="isAdmin">
-        <label for="paciente">Paciente:</label>
-        <input id="paciente" formControlName="paciente" type="text" [readonly]="isAdmin" />
-        
-        <label for="dni">DNI:</label>
-        <input id="dni" formControlName="dni" type="text" [readonly]="isAdmin" />
+  <!-- Mostrar especialidades en botones cuadrados con bordes redondeados -->
+  <label for="especialidad">Especialidad:</label>
+  <div class="especialidades-container">
+    <div *ngFor="let especialidad of especialidadesDelEspecialista" class="especialidad-btn" (click)="onEspecialidadChange(especialidad.nombre)">
+      <img [src]="especialidad.imagen" alt="{{especialidad.nombre}}" class="especialidad-img" />
+      <span class="especialidad-nombre">{{especialidad.nombre}}</span>
+    </div>
+  </div>
 
-        <label for="obraSocial">Obra Social:</label>
-        <input id="obraSocial" formControlName="obraSocial" type="text" [readonly]="isAdmin" />
-    </div>  
+  <!-- Mostrar los días disponibles -->
+  <label for="horario">Día:</label>
+  <div class="dias-container">
+    <div *ngFor="let dia of diasDisponibles" (click)="onDiaSeleccionado(dia)">
+      <button type="button" class="dia-btn">{{ dia | date: 'yyyy-MM-dd' }}</button>
+    </div>
+  </div>
 
-    <!-- Mostrar el listado de pacientes solo si es administrador -->
-    <app-listado-paciente *ngIf="isAdmin" (usuarioSeleccionado)="setPacienteData($event)"></app-listado-paciente>
+  <!-- Mostrar los horarios disponibles con botón de selección -->
+  <label for="horario">Horario:</label>
+  <div *ngFor="let horario of horarios" (click)="onHorarioSeleccionado(horario)">
+    <button type="button" class="horario-btn">{{ horario.horaInicio }} - {{ horario.horaFin }}</button>
+  </div>
 
-    <button type="submit">Solicitar Turno</button>
+  <!-- Datos del paciente solo visibles si el usuario es administrador -->
+  <div *ngIf="isAdmin">
+    <label for="paciente">Paciente:</label>
+    <input formControlName="paciente" type="text" readonly />
+
+    <label for="dni">DNI:</label>
+    <input formControlName="dni" type="text" readonly />
+
+    <label for="obraSocial">Obra Social:</label>
+    <input formControlName="obraSocial" type="text" readonly />
+  </div>
+
+   <!-- Mostrar el listado de pacientes solo si es administrador -->
+   <app-listado-paciente *ngIf="isAdmin" (usuarioSeleccionado)="setPacienteData($event)"></app-listado-paciente>
+
+  <button type="submit">Solicitar turno</button>
 </form>

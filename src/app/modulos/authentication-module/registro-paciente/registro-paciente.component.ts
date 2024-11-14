@@ -121,4 +121,8 @@ export class RegistroPacienteComponent {
       Swal.fire('Formulario inválido', 'Por favor, completa todos los campos correctamente.', 'warning');
     }
   }
+  
+  onCaptchaResolved(captchaResponse: any): void {
+    this.captchaValido = !!captchaResponse; // Actualiza el estado de captcha
+  }
 }
