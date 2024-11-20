@@ -1,5 +1,24 @@
 <h2>Listado de Administradores</h2>
 
+<div class="administrador-grid">
+  <div *ngFor="let admin of usuarios" class="admin-card">
+    <button class="fab-button" (click)="seleccionarUsuario(admin)">
+      <img 
+        [src]="admin.imageUrl" 
+        alt="admin" 
+        class="admin-imagen" 
+      />
+      <h4>{{ admin.nombre }} {{ admin.apellido }}</h4>
+      <p>{{ admin.email }}</p>
+      <p [ngClass]="{ 'habilitado': admin.habilitado, 'inhabilitado': !admin.habilitado }">
+        {{ admin.habilitado ? 'Habilitado' : 'Inhabilitado' }}
+      </p>
+    </button>
+</div>
+
+
+
+<!-- 
 <table>
   <thead>
     <tr>
@@ -21,4 +40,4 @@
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->

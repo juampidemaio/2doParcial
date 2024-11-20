@@ -27,8 +27,10 @@
 
   <!-- Mostrar los horarios disponibles con botón de selección -->
   <label for="horario">Horario:</label>
-  <div *ngFor="let horario of horarios" (click)="onHorarioSeleccionado(horario)">
-    <button type="button" class="horario-btn">{{ horario.horaInicio }} - {{ horario.horaFin }}</button>
+  <div class="horarios-container">
+    <div *ngFor="let horario of horarios" (click)="onHorarioSeleccionado(horario)">
+      <button type="button" class="horario-btn">{{ horario.horaInicio }} - {{ horario.horaFin }}</button>
+    </div>
   </div>
 
   <!-- Datos del paciente solo visibles si el usuario es administrador -->
@@ -43,8 +45,10 @@
     <input formControlName="obraSocial" type="text" readonly />
   </div>
 
-   <!-- Mostrar el listado de pacientes solo si es administrador -->
-   <app-listado-paciente *ngIf="isAdmin" (usuarioSeleccionado)="setPacienteData($event)"></app-listado-paciente>
 
-  <button type="submit">Solicitar turno</button>
+   <button type="submit">Solicitar turno</button>
+
 </form>
+
+<!-- Mostrar el listado de pacientes solo si es administrador -->
+<app-listado-paciente *ngIf="isAdmin" (usuarioSeleccionado)="setPacienteData($event)"></app-listado-paciente>

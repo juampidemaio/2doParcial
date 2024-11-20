@@ -11,10 +11,20 @@ import { AuthenticationService } from '../../../servicios/authentication.service
 export class ListadoPacienteComponent {
   @Output() usuarioSeleccionado = new EventEmitter<any>();
   usuarios: any[] = []; 
+  usuarioIniciado:any;
 
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(user => {
+      if (user) {
+        this.usuarioIniciado = user; 
+        // this.cargarPacientes(user.uid); 
+        // this.cargarEspecialidades();
+      } else {
+        Swal.fire('Error', 'No se encontró el usuario', 'error');
+      }
+    });
     this.cargarUsuarios();
   }
 

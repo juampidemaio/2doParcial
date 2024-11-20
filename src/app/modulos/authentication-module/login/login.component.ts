@@ -28,6 +28,7 @@ export class LoginComponent {
           timer: 2000,
           showConfirmButton: false
         });
+        this.authService.logLogin(this.userMail)
         this.router.navigate(['/bienvenida']); 
       })
       .catch((error) => {

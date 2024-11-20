@@ -15,91 +15,61 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   styleUrl: './app.component.scss',
   animations: [
     trigger('routeAnimations', [
-      // Transición de BienvenidaPage a MiPerfilPage (y viceversa)
-      transition('BienvenidaPage <=> MiPerfilPage', [
-        style({ position: 'relative' }),
-        query(':enter, :leave', [
-          style({
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            transform: 'scale(0) rotate(180deg)', // Escala y rotación
-            opacity: 0
-          })
-        ], { optional: true }),
-        query(':enter', [
-          style({ left: '-100%' })
-        ], { optional: true }),
-        group([
-          query(':leave', [
-            animate('1500ms ease-out', style({
-              left: '100%',
-              opacity: 0,
-              transform: 'scale(3) rotate(-360deg)'
-            }))
-          ], { optional: true }),
-          query(':enter', [
-            animate('1500ms ease-in', style({
-              left: '0%',
-              opacity: 1,
-              transform: 'scale(1) rotate(0deg)'
-            }))
-          ], { optional: true })
-        ])
-      ]),
-
-      // Transición de BienvenidaPage a cualquier otra página
       transition('BienvenidaPage <=> *', [
         style({ position: 'relative' }),
+        
+        // Eliminar cualquier transición previa para tener un inicio limpio
         query(':enter, :leave', [
           style({
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
-            transform: 'scale(0.5) rotate(90deg)', // Rotación y escala de entrada
-            opacity: 0
+            transform: 'translateY(-100%)', // Comienza fuera de vista por arriba
+            opacity: 0,
+            filter: 'blur(30px)',  // Aplicamos blur desde el inicio
           })
         ], { optional: true }),
-        query(':enter', [
-          style({ left: '100%' })
-        ], { optional: true }),
+  
         group([
+          // Cuando se sale de la página de bienvenida
           query(':leave', [
-            animate('1200ms ease-out', style({
-              left: '-100%',
+            animate('1s ease-out', style({
+              transform: 'translateY(-100%)',  // Sale hacia arriba
               opacity: 0,
-              transform: 'scale(3) rotate(180deg)'
+              filter: 'blur(10px)', // Mantiene el desenfoque mientras sale
             }))
           ], { optional: true }),
+  
+          // Cuando se entra en la página de bienvenida
           query(':enter', [
-            animate('1200ms ease-in', style({
-              left: '0%',
+            animate('1s ease-in', style({
+              transform: 'translateY(0%)',  // Entra desde arriba
               opacity: 1,
-              transform: 'scale(1) rotate(0deg)'
+              filter: 'blur(0)',  // El desenfoque desaparece
             }))
-          ], { optional: true })
+          ], { optional: true }),
         ])
       ]),
+  
 
       // Transición de cualquier página a MisHorariosPage
       transition('* <=> MisHorariosPage', [
         query(':enter', [
           style({
             opacity: 0,
-            transform: 'scale(0.5) rotate(90deg)',
-            backgroundColor: 'yellow' 
+            transform: 'translateY(-200%)', // Desde mucho más arriba
           })
         ], { optional: true }),
         query(':enter', [
-          animate('1500ms ease-in-out', style({
+          animate('1s ease-in-out', style({
             opacity: 1,
-            transform: 'scale(1.2) rotate(0deg)',
-            backgroundColor: 'transparent'
+            transform: 'translateY(0%)' // Entra desde muy arriba
           }))
         ], { optional: true })
       ]),
+
+      // Transición de cualquier página a cualquier otra página
       transition('* <=> *', [
         style({ position: 'relative' }),
         query(':enter, :leave', [
@@ -108,20 +78,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
             top: 0,
             left: 0,
             width: '100%',
-            opacity: 0
+            opacity: 0,
+            transform: 'translateY(-150%)', // Exagerado desde arriba
           })
         ], { optional: true }),
         group([
           query(':leave', [
-            animate('300ms ease-out', style({ opacity: 0 }))
+            animate('1s ease-out', style({
+              opacity: 0,
+              transform: 'translateY(150%)' // Sale hacia abajo con un movimiento largo
+            }))
           ], { optional: true }),
           query(':enter', [
-            animate('300ms ease-in', style({ opacity: 1 }))
+            animate('1s ease-in', style({
+              opacity: 1,
+              transform: 'translateY(0%)' // Entra desde mucho más arriba
+            }))
           ], { optional: true })
         ])
       ])
-
-      // Añadir más transiciones para otras rutas si es necesario
     ])
   ]
 })

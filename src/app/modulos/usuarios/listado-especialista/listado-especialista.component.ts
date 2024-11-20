@@ -10,11 +10,21 @@ import Swal from 'sweetalert2';
 })
 export class ListadoEspecialistaComponent {
   @Output() usuarioSeleccionado = new EventEmitter<any>();
-  usuarios: any[] = []; 
+  especialistas: any[] = []; 
+  usuarioActual:any = ""; // Este usuario debería contener la propiedad 'role'
+
+  
 
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(user => {
+      if (user) {
+        this.usuarioActual = user; 
+      } else {
+        Swal.fire('Error', 'No se encontró el usuario', 'error');
+      }
+    });
     this.cargarUsuarios();
   }
 
@@ -35,7 +45,7 @@ export class ListadoEspecialistaComponent {
       });
 
       const todosLosUsuarios = await this.authService.obtenerUsuarios();
-      this.usuarios = todosLosUsuarios.filter(usuario => usuario.role === 'especialista'); // Filtrar solo especialistas
+      this.especialistas = todosLosUsuarios.filter(usuario => usuario.role === 'especialista'); // Filtrar solo especialistas
     } catch (error) {
       console.error('Error al cargar usuarios:', error);
       Swal.fire({

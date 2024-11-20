@@ -75,6 +75,17 @@ export class RegistroPacienteComponent {
 
   // Registrar paciente
   async guardarPaciente(): Promise<void> {
+    if (!this.pacienteForm.valid || !this.captchaValido) {
+      let mensaje = 'Por favor, completa todos los campos correctamente.';
+  
+      if (!this.captchaValido) {
+        mensaje = 'Por favor, completa todos los campos y resuelve el captcha.';
+      }
+  
+      Swal.fire('Formulario inválido', mensaje, 'warning');
+      return;
+    }
+
     if (this.pacienteForm.valid  && this.captchaValido) {
       const imagenesArray = this.pacienteForm.get('imagenes') as FormArray;
       if (imagenesArray.length !== 2) {

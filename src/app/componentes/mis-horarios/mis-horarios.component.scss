@@ -1,82 +1,57 @@
 /* Estilos generales del formulario */
 form {
-    max-width: 800px; /* Ancho máximo del formulario */
-    margin: 20px auto; /* Centrando el formulario en la página */
-    padding: 30px; /* Espaciado interno */
-    border: 2px solid #007bff; /* Borde color azul */
-    border-radius: 15px; /* Bordes redondeados */
-    background-color: #e0f7fa; /* Fondo celeste claro */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
-  }
-  
-  /* Estilo de las etiquetas de días de la semana */
-  label {
-    font-weight: bold; /* Negrita para las etiquetas */
-    margin-bottom: 5px; /* Separación de etiqueta */
-    display: block; /* Bloque para el ancho completo */
-    color: #007bff; /* Color azul para etiquetas */
-  }
-  
-  select {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #D5D8DC;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  select:focus {
-    border-color: #154360;
-  }
-  
-  /* Contenedor de horarios */
-  .horarios {
-    display: flex; /* Flex para colocar los campos uno al lado del otro */
-    gap: 15px; /* Separación entre los campos */
-  }
-  
-  /* Estilo de los campos de entrada de tiempo */
-  input[type="time"] {
-    width: 48%; /* Ancho ajustado al 50% menos el margen */
-    padding: 12px; /* Relleno interno */
-    border: 1px solid #007bff; /* Borde azul */
-    border-radius: 6px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño de fuente */
-    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
-    background-color: #f1f1f1; /* Fondo gris claro */
-    transition: border-color 0.3s, background-color 0.3s; /* Transición suave */
-  }
-  
-  /* Efecto de enfoque en los campos de entrada */
-  input[type="time"]:focus {
-    border-color: #0056b3; /* Color más oscuro al enfoque */
-    outline: none; /* Sin borde de enfoque predeterminado */
-    background-color: #ffffff; /* Fondo blanco al enfocarse */
-  }
-  
-  /* Estilo del botón de envío */
-  button[type="submit"] {
-    background-color: #007bff; /* Color de fondo azul */
-    color: white; /* Color del texto */
-    padding: 12px 15px; /* Relleno interno */
-    border: none; /* Sin borde */
-    border-radius: 6px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor pointer */
-    transition: background-color 0.3s, transform 0.2s; /* Transición */
-    width: 100%; /* Ancho completo */
-    font-size: 1em; /* Tamaño de la fuente */
-  }
-  
-  /* Efecto de hover en el botón */
-  button[type="submit"]:hover {
-    background-color: #0056b3; /* Azul oscuro al hover */
-    transform: translateY(-2px); /* Elevación al pasar el mouse */
-  }
-  
-  /* Estilo para el contenedor de cada campo */
-  div {
-    margin-bottom: 20px; /* Espacio entre campos */
-  }
-  
+  max-width: 1200px; /* Aumentar aún más el ancho máximo */
+  margin: 20px auto; /* Centrando el formulario en la página */
+  padding: 15px; /* Reducir el espaciado interno */
+  border: 2px solid #007bff; /* Borde color azul */
+  border-radius: 15px; /* Bordes redondeados */
+  background-color: #e0f7fa; /* Fondo celeste claro */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+}
+
+/* Estilo de los campos de entrada de tiempo */
+input[type="time"] {
+  width: 48%; /* Ajustar el ancho al 48% para ocupar menos espacio */
+  padding: 6px; /* Reducir más el relleno interno */
+  border: 1px solid #007bff; /* Borde azul */
+  border-radius: 6px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+  box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+  background-color: #f1f1f1; /* Fondo gris claro */
+  transition: border-color 0.3s, background-color 0.3s; /* Transición suave */
+  margin: 5px 5px; /* Reducir más la separación entre los campos */
+}
+
+/* Estilo del botón de envío */
+button[type="submit"] {
+  background-color: #007bff; /* Color de fondo azul */
+  color: white; /* Color del texto */
+  padding: 10px 12px; /* Relleno interno reducido */
+  border: none; /* Sin borde */
+  border-radius: 6px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor pointer */
+  transition: background-color 0.3s, transform 0.2s; /* Transición */
+  width: 100%; /* Ancho completo */
+  font-size: 1em; /* Tamaño de la fuente */
+}
+
+/* Estilos de los contenedores de las especialidades */
+input[type="radio"] {
+  margin-right: 8px; /* Separación más pequeña entre el radio y el texto */
+  accent-color: #007bff; /* Color del radio button */
+  transform: scale(1.2); /* Tamaño aumentado */
+}
+
+/* Estilos de los contenedores de los días de la semana */
+input[type="checkbox"] {
+  margin-right: 8px; /* Separación más pequeña entre el checkbox y el texto */
+  accent-color: #007bff; /* Color del checkbox */
+  transform: scale(1.2); /* Tamaño aumentado */
+}
+
+/* Ajustes de la sección de días de la semana */
+.horarios {
+  display: flex; /* Flex para colocar los campos uno al lado del otro */
+  gap: 10px; /* Separación más ajustada entre los campos */
+  flex-wrap: wrap; /* Asegurar que los campos no se desborden */
+}

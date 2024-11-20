@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { collection, doc, Firestore, getDoc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, getDoc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage'; // Asegúrate de que 'ref' se importe de 'storage'
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -93,6 +93,14 @@ export class AuthenticationService {
       console.error("Error en el login:", error);
       throw error;
     }
+  }
+
+  // Método para guardar el login en la base de datos
+  async logLogin(email: string) {
+    const col = collection(this.firestore, 'logins');
+    addDoc(col, { fecha: new Date(), user: email })
+      .then(() => console.log('Login registrado correctamente'))
+      .catch((error) => console.log('Error al registrar el login: ', error));
   }
   
   // Método para obtener datos del usuario

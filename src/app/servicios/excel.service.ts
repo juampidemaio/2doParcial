@@ -12,7 +12,7 @@ export class ExcelService {
     XLSX.utils.book_append_sheet(wb, ws, 'Datos');
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   }
-  
+
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });

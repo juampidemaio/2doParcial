@@ -1,14 +1,15 @@
 /* General form styles */
 form {
-  max-width: 800px;
+  max-width: 1600px; /* Aumentado el ancho máximo */
   margin: 20px auto;
-  padding: 30px;
+  padding: 20px; /* Reducido el padding */
   border: 2px solid #007bff;
   border-radius: 15px;
   background-color: #e0f7fa;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Label styles */
 label {
   font-weight: bold;
   margin-bottom: 5px;
@@ -20,11 +21,11 @@ label {
 input[type="text"],
 select {
   width: 100%;
-  padding: 12px;
+  padding: 10px; /* Reducido el padding */
   border: 1px solid #007bff;
   border-radius: 6px;
   font-size: 16px;
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Reducido el margen */
   background-color: #f1f1f1;
   transition: border-color 0.3s, background-color 0.3s;
 }
@@ -39,12 +40,12 @@ select:focus {
 button[type="submit"] {
   background-color: #007bff;
   color: white;
-  padding: 12px 15px;
+  padding: 12px 18px; /* Reducido el padding */
   border: none;
   border-radius: 6px;
   cursor: pointer;
   width: 100%;
-  font-size: 1em;
+  font-size: 1.1em; /* Tamaño de la fuente ajustado */
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -57,7 +58,7 @@ button[type="submit"]:hover {
 .profesionales-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px; /* Mantener el espacio entre los elementos */
   margin-bottom: 20px;
 }
 
@@ -65,11 +66,11 @@ button[type="submit"]:hover {
   cursor: pointer;
   text-align: center;
   transition: transform 0.3s;
-  padding: 15px;
+  padding: 15px; /* Reducido el padding */
   background-color: #f1f1f1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
-  width: 100px; /* Ajustar tamaño del botón */
+  width: 120px; /* Ancho ajustado */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,15 +81,15 @@ button[type="submit"]:hover {
 }
 
 .profesional-nombre {
-  font-size: 14px;
+  font-size: 16px; /* Tamaño de la fuente ajustado */
   font-weight: bold;
   color: #007bff;
-  margin-bottom: 8px; /* Espacio entre el nombre y la imagen */
+  margin-bottom: 8px; /* Espacio ajustado */
 }
 
 .profesional-img {
-  width: 60px;
-  height: 60px;
+  width: 80px; /* Ancho ajustado */
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -97,7 +98,7 @@ button[type="submit"]:hover {
 .especialidades-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px; /* Mantener el espacio entre los elementos */
   margin-bottom: 20px;
 }
 
@@ -105,10 +106,16 @@ button[type="submit"]:hover {
   cursor: pointer;
   text-align: center;
   border-radius: 12px;
-  padding: 20px;
+  padding: 12px; /* Reducido el padding */
   background-color: #f1f1f1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
+  width: 120px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .especialidad-btn:hover {
@@ -120,32 +127,36 @@ button[type="submit"]:hover {
   height: 60px;
   object-fit: cover;
   border-radius: 8px;
+  margin-top: 8px;
 }
 
 .especialidad-nombre {
-  margin-top: 5px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #007bff;
+  margin-bottom: 8px;
 }
 
-/* Days container */
-.dias-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+/* Days and hours container */
+.dias-container, .horarios-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Usar grid para mejor ajuste */
+  gap: 20px; /* Mantener el espacio entre los elementos */
   margin-bottom: 20px;
 }
 
-.dia-btn {
+.dia-btn, .horario-btn {
   cursor: pointer;
   text-align: center;
   border-radius: 6px;
-  padding: 15px;
-  background-color: #f1f1f1;
+  padding: 15px; /* Reducido el padding */
+  background-color: #4CAF50;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 150px; /* Estilo rectangular */
   transition: transform 0.3s;
+}
+
+.horario-btn {
+  font-weight: bold;
 }
 
 .dia-btn:hover {
@@ -153,30 +164,9 @@ button[type="submit"]:hover {
 }
 
 .dia-btn span {
-  font-size: 14px;
+  font-size: 16px; /* Tamaño de la fuente ajustado */
   font-weight: bold;
   color: #007bff;
-}
-
-/* Schedules container */
-.horarios-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.horario-btn {
-  padding: 12px;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  text-align: center;
-  min-width: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .horario-btn:hover {
@@ -187,7 +177,7 @@ button[type="submit"]:hover {
 div[ngIf] {
   margin-bottom: 20px;
   background-color: #f9f9f9;
-  padding: 15px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

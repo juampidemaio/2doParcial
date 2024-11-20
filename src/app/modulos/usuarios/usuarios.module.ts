@@ -10,6 +10,9 @@ import { authenticationModuleModule } from '../authentication-module/authenticat
 import { ListadoPacienteComponent } from './listado-paciente/listado-paciente.component';
 import { ListadoAdminComponent } from './listado-admin/listado-admin.component';
 import { SeccionPacientesComponent } from './seccion-pacientes/seccion-pacientes.component';
+import { PermisosDirective } from '../../directives/permisos.directive';
+import { FormatoValorPipe } from "../../pipes/formato-valor.pipe";
+
 
 @NgModule({
   declarations: [
@@ -18,15 +21,19 @@ import { SeccionPacientesComponent } from './seccion-pacientes/seccion-pacientes
     DetalleUsuariosComponent,
     ListadoEspecialistaComponent,
     ListadoAdminComponent,
-    SeccionPacientesComponent
+    SeccionPacientesComponent,
+    PermisosDirective,
+    
+    
   ],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    authenticationModuleModule  // Importar el módulo completo aquí
-  ],
+    authenticationModuleModule,
+    FormatoValorPipe
+],
   exports:[ListadoPacienteComponent, ListadoEspecialistaComponent]
 })
 export class UsuariosModule { }

@@ -189,7 +189,7 @@ export class RegistroEspecialistaComponent {
         Swal.close();
       }
     } else {
-      Swal.fire('Formulario inválido', 'Por favor, completa todos los campos', 'warning');
+      Swal.fire('Formulario inválido', 'Por favor, completa todos los campos y realiza el captcha', 'warning');
     }
   }
   

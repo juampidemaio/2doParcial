@@ -12,16 +12,18 @@ import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especi
 import { TurnosPacientesComponent } from './turnos-pacientes/turnos-pacientes.component';
 
 
+
 @NgModule({
   declarations: [SolicitarTurnoComponent,GestionHorariosComponent, GestionarTurnosComponent,TurnosEspecialistaComponent, TurnosPacientesComponent],
   imports: [
-    CommonModule,
     SeccionTurnosRoutingModule,
     ReactiveFormsModule,
     UsuariosModule,
     CommonModule,
-    FormsModule
-    
+    FormsModule,
+
   ]
+  
+  
 })
 export class SeccionTurnosModule { }

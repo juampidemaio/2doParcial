@@ -1,27 +1,15 @@
 <h2>Listado de Pacientes Atendidos</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Email</th>
-      <th>Obra Social</th>
-      <th>Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let paciente of pacientesAtendidos" (click)="seleccionarPaciente(paciente)">
-      <td>{{ paciente.nombre }}</td>
-      <td>{{ paciente.apellido }}</td>
-      <td>{{ paciente.email }}</td>
-      <td>{{ paciente.obraSocial }}</td>
-      <td [ngClass]="{ 'habilitado': paciente.habilitado, 'inhabilitado': !paciente.habilitado }">
-        {{ paciente.habilitado ? 'Habilitado' : 'Inhabilitado' }}
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="pacientes-grid">
+  <div *ngFor="let paciente of pacientesAtendidos" class="paciente-card">
+    <button class="fab-button" (click)="seleccionarPaciente(paciente)">
+      <img [src]="paciente.imagenes[0]" alt="Paciente" class="paciente-imagen" />
+      <h4>{{ paciente.nombre }} {{ paciente.apellido }}</h4>
+    </button>
+  </div>
+</div>
+
+
 
 <div class="details-container" *ngIf="pacienteSeleccionado">
   <div *ngIf="!historialVisible">
@@ -41,27 +29,35 @@
   <!-- Mostrar el historial clínico si historialVisible es true -->
   <div *ngIf="historialVisible" class="historia-clinica">
     <h3>Historia Clínica de {{ pacienteSeleccionado?.nombre }}</h3>
-    <div *ngIf="turnos">
-      <h4>Turnos</h4>
-      <div *ngFor="let key of objectKeys(turnos)">
-        <div *ngIf="turnos[key]" class="turno-container">
-          <h5>Turno de {{ turnos[key].especialidad }}</h5>
-          <p><strong>Especialidad:</strong> {{ turnos[key].especialidad }}</p>
-          <p><strong>Especialista:</strong> {{ turnos[key].nombreEspecialista }}</p>
-          <p><strong>Fecha:</strong> {{ turnos[key].fechaTurno }}</p>
-          <p><strong>Altura:</strong> {{ turnos[key].altura }}</p>
-          <p><strong>Peso:</strong> {{ turnos[key].peso }}</p>
-          <p><strong>Temperatura:</strong> {{ turnos[key].temperatura }}</p>
-          <p><strong>Presión:</strong> {{ turnos[key].presion }}</p>
+   <!-- Mostrar los turnos -->
+   <div *ngIf="turnos.length > 0">
+    <h4>Turnos</h4>
+    <div *ngFor="let turno of turnos" class="turno-container">
+      <div *ngIf="turno.historiaClinica">
+        <h5>Turno de {{ turno.especialidad }}</h5>
+        <p><strong>Especialidad:</strong> {{ turno.especialidad }}</p>
+        <p><strong>Especialista:</strong> {{ turno.especialista }}</p>
+        <p><strong>Fecha:</strong> {{ turno.fecha }}</p>
+        <p><strong>Altura:</strong> {{ turno.historiaClinica.altura | formatoValor:'No disponible'  }}</p>
+        <p><strong>Peso:</strong> {{ turno.historiaClinica.peso | formatoValor:'No disponible' }}</p>
+        <p><strong>Temperatura:</strong> {{ turno.historiaClinica.temperatura | formatoValor:'No disponible' }}</p>
+        <p><strong>Presión:</strong> {{ turno.historiaClinica.presion | formatoValor:'No disponible'  }}</p>
 
-          <!-- Otros campos adicionales -->
-          <div *ngIf="turnos[key].datosDinamicos && turnos[key].datosDinamicos.length > 0">
-            <h5>Otros Datos:</h5>
-            <div *ngFor="let dato of turnos[key].datosDinamicos">
-              <p><strong>{{ dato.clave }}:</strong> {{ dato.valor }}</p>
-            </div>
+        
+        <div *ngIf="turno.historiaClinica.datosDinamicos.length === 0">
+          <p><strong>Otros Datos:</strong> {{ null | formatoValor:'Sin información disponible' }}</p>
+        </div>
+        <div *ngIf="turno.historiaClinica.datosDinamicos.length > 0">
+          <h5>Otros Datos:</h5>
+          <div *ngFor="let dato of turno.historiaClinica.datosDinamicos">
+            <p>
+              <strong>{{ dato.clave }}:</strong> {{ dato.valor | formatoValor:'Sin valor' }}
+            </p>
           </div>
         </div>
+        <button class="realizado" (click)="verResenaTurno(turno)">
+          ver reseña
+         </button>
       </div>
     </div>
   </div>

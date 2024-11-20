@@ -123,3 +123,41 @@
     background-color: #ffffff;
   }
 
+  .especialistas {
+    margin-top: 2rem;
+    text-align: center;
+    background-color: #EAEDED;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  }
+  
+  .especialistas h3 {
+    color: #1E8449;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .especialistas button {
+    background-color: #27AE60; /* Verde medio */
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .especialistas button:hover {
+    background-color: #1E8449; /* Verde más oscuro */
+    transform: translateY(-2px);
+  }
+  
+  .especialistas button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.4);
+  }
+  

@@ -1,5 +1,5 @@
 <h2>Listado de Turnos</h2>
-
+<!-- 
 <label>Especialidad:</label>
 <div *ngFor="let especialidad of especialidades">
   <input type="radio" [value]="especialidad" name="especialidad" (change)="onEspecialidadChange($event)" /> {{especialidad}}
@@ -9,28 +9,10 @@
 <div *ngFor="let paciente of pacientes">
   <input type="radio" [value]="paciente.uid" name="paciente" (change)="onPacienteChange($event, paciente)" /> 
   {{ paciente.nombre }} {{ paciente.apellido }}
-</div>
-
-<form (ngSubmit)="buscarTurnos()">
-  <label for="campo">Filtrar por:</label>
-  <select id="campo" [(ngModel)]="filtroCampo" name="campo">
-    <!-- <option value="especialidad">Especialidad</option>
-    <option value="especialista">Especialista</option> -->
-    <option value="fecha">Fecha</option>
-    <option value="estado">Estado</option>
-    <!-- Campos de la historia clínica -->
-    <option value="temperatura">temperatura</option>
-    <option value="altura">altura</option>
-    <option value="peso">Peso</option>
-    <option value="presion">presion</option>
-  </select>
-
-  <label for="valor">Valor:</label>
-  <input type="text" id="valor" [(ngModel)]="filtroValor" name="valor" />
-
-  <button type="submit">Buscar</button>
-</form>
-
+</div> -->
+<label>Buscar Turnos:</label>
+<input type="text" [(ngModel)]="filtroValor" placeholder="Buscar por paciente, campo o valor" />
+<button class ="buscar"(click)="buscarTurnos()">Buscar</button>
 
 
 <table>
@@ -50,10 +32,10 @@
   <tbody>
     <tr *ngFor="let horario of horarios">
       <td>{{ horario.dni }}</td>
-      <td>{{ nombrePaciente}}</td>
+      <td>{{ horario.paciente}}</td>
       <td>{{ horario.obraSocial }}</td>  
       <td>{{ horario.especialista }}</td>
-      <td>{{ especialidadSeleccionada }}</td>
+      <td>{{ horario.especialidad }}</td>
       <td>{{ horario.fecha }}</td>
       <td>{{ horario.hora_inicio }} - {{ horario.hora_fin }}</td>
       <td>{{ horario.estado }}</td>

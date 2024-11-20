@@ -4,23 +4,32 @@
 <div *ngFor="let especialidad of especialidades">
   <input type="radio" [value]="especialidad" name="especialidad" (change)="onEspecialidadChange($event)" /> {{especialidad}}
 </div>
+
 <div>
   <form (ngSubmit)="guardarDisponibilidad()">
-    <div *ngFor="let dia of ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']">
-      <label>{{ dia | titlecase }}</label>
+    <div *ngFor="let dia of diasSemana">
+      
       <div class="horarios">
-        <input 
-          type="time" 
-          [(ngModel)]="disponibilidadSemana[dia].horaInicio" 
-          name="{{ dia }}HoraInicio" 
-          placeholder="Hora de inicio"
-        >
-        <input 
-          type="time" 
-          [(ngModel)]="disponibilidadSemana[dia].horaFin" 
-          name="{{ dia }}HoraFin" 
-          placeholder="Hora de fin"
-        >
+        <label>
+            <input type="checkbox" [(ngModel)]="disponibilidadSemana[dia].disponibilidad" 
+            (change)="onDisponibilidadChange(dia, $event)" />
+          {{ dia | capitalize }}
+        </label>
+        
+        
+    
+        <div *ngIf="disponibilidadSemana[dia].disponibilidad">
+          <input 
+            type="time" 
+            [(ngModel)]="disponibilidadSemana[dia].horaInicio" 
+            name="{{ dia }}HoraInicio" 
+            placeholder="Hora de inicio">
+          <input 
+            type="time" 
+            [(ngModel)]="disponibilidadSemana[dia].horaFin" 
+            name="{{ dia }}HoraFin" 
+            placeholder="Hora de fin">
+        </div>
       </div>
     </div>
 

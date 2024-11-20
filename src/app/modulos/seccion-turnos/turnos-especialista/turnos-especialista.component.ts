@@ -4,6 +4,8 @@ import { EspecialidadService } from '../../../servicios/especialidad.service';
 import { EspecialistaService } from '../../../servicios/especialista.service';
 import { TurnoService } from '../../../servicios/turnos.service';
 import { AuthenticationService } from '../../../servicios/authentication.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -26,75 +28,86 @@ export class TurnosEspecialistaComponent {
 
   constructor(
     private turnoService: TurnoService,
-    private especialistaService: EspecialistaService,
     private authenticationService: AuthenticationService,
+    private cdr: ChangeDetectorRef  // Inyectar ChangeDetectorRef
   ) {}
+  
 
    ngOnInit() {
     this.authenticationService.getUser().subscribe(user => {
       if (user) {
         this.especialistaIniciado = user; 
-        this.cargarPacientes(user.uid); 
-        this.cargarEspecialidades();
+        this.cargarTurnos(user.uid);
+        // this.cargarPacientes(user.uid); 
+        // this.cargarEspecialidades();
       } else {
         Swal.fire('Error', 'No se encontró el usuario', 'error');
       }
     });
   }
-  
-  async cargarPacientes(uidEspecialista: string) {
+
+  async cargarTurnos(uidEspecialista: string) {
     try {
-      this.pacientes = await this.especialistaService.getPacientesUnicosPorEspecialista(uidEspecialista);
-      console.log('Pacientes cargados:', this.pacientes);
+      this.horarios = await this.turnoService.obtenerTurnosDisponiblesEspecialista(uidEspecialista);
     } catch (error) {
-      console.error('Error cargando pacientes:', error);
-      Swal.fire('Error', 'No se pudieron cargar los pacientes', 'error');
+      Swal.fire('Error', 'No se pudieron cargar los turnos', 'error');
     }
+    
   }
   
-  async cargarEspecialidades() {
-    if (this.especialistaIniciado && this.especialistaIniciado.especialidades) {
-      this.especialidades = this.especialistaIniciado.especialidades;
-      console.log('Especialidades cargadas:', this.especialidades); // Añadir para depuración
-    } else {
-      this.especialidades = [];
-      Swal.fire('Error', 'No se encontraron especialidades para este especialista', 'error');
-    }
-  }
+  // async cargarPacientes(uidEspecialista: string) {
+  //   try {
+  //     this.pacientes = await this.especialistaService.getPacientesUnicosPorEspecialista(uidEspecialista);
+  //     console.log('Pacientes cargados:', this.pacientes);
+  //   } catch (error) {
+  //     console.error('Error cargando pacientes:', error);
+  //     Swal.fire('Error', 'No se pudieron cargar los pacientes', 'error');
+  //   }
+  // }
+  
+  // async cargarEspecialidades() {
+  //   if (this.especialistaIniciado && this.especialistaIniciado.especialidades) {
+  //     this.especialidades = this.especialistaIniciado.especialidades;
+  //     console.log('Especialidades cargadas:', this.especialidades); // Añadir para depuración
+  //   } else {
+  //     this.especialidades = [];
+  //     Swal.fire('Error', 'No se encontraron especialidades para este especialista', 'error');
+  //   }
+  // }
 
-  async onEspecialidadChange(event: Event) {
-    const selectElement = event.target as HTMLInputElement;
-    this.especialidadSeleccionada = selectElement.value; 
-    if (this.especialidadSeleccionada) {
-      try {
-        this.pacientes = await this.especialistaService.getPacientesUnicosPorEspecialidad(this.especialistaIniciado.uid, this.especialidadSeleccionada);
-        this.horarios = []; 
-      } catch (error) {
-        Swal.fire('Error', 'No se pudieron cargar los pacientes', 'error');
-      }
-    } else {
-      this.pacientes = [];
-      this.horarios = [];
-    }
-  }
+  // async onEspecialidadChange(event: Event) {
+  //   const selectElement = event.target as HTMLInputElement;
+  //   this.especialidadSeleccionada = selectElement.value; 
+  //   if (this.especialidadSeleccionada) {
+  //     try {
+  //       this.pacientes = await this.especialistaService.getPacientesUnicosPorEspecialidad(this.especialistaIniciado.uid, this.especialidadSeleccionada);
+  //       this.horarios = []; 
+  //     } catch (error) {
+  //       Swal.fire('Error', 'No se pudieron cargar los pacientes', 'error');
+  //     }
+  //   } else {
+  //     this.pacientes = [];
+  //     this.horarios = [];
+  //   }
+  // }
 
-  async onPacienteChange(event: Event, paciente: any) {
-    const selectElement = event.target as HTMLInputElement;
-    this.pacienteSeleccionadoId = selectElement.value; 
-    if (this.pacienteSeleccionadoId) {
-      this.nombrePaciente = `${paciente.nombre} ${paciente.apellido}`; 
+  // async onPacienteChange(event: Event, paciente: any) {
+  //   const selectElement = event.target as HTMLInputElement;
+  //   this.pacienteSeleccionadoId = selectElement.value; 
+  //   if (this.pacienteSeleccionadoId) {
+  //     this.nombrePaciente = `${paciente.nombre} ${paciente.apellido}`; 
       
-      try {
-        const turnos = await this.turnoService.obtenerTurnosDisponiblesPaciente(this.pacienteSeleccionadoId);
-        this.horarios = turnos.filter((turno: any) => turno.especialidad === this.especialidadSeleccionada);
-        this.horarios.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
-      } catch (error) {
-        Swal.fire('Error', 'No se pudieron cargar los turnos', 'error');
-      }
-    } else {
-      this.horarios = [];
-    }
-  }
+  //     try {
+  //       const turnos = await this.turnoService.obtenerTurnosDisponiblesPaciente(this.pacienteSeleccionadoId);
+  //       this.horarios = turnos.filter((turno: any) => turno.especialidad === this.especialidadSeleccionada);
+  //       this.horarios.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
+  //     } catch (error) {
+  //       Swal.fire('Error', 'No se pudieron cargar los turnos', 'error');
+  //     }
+  //   } else {
+  //     this.horarios = [];
+  //   }
+  // }
 
   
   async cancelarTurno(turno: any) {
@@ -125,14 +138,17 @@ export class TurnosEspecialistaComponent {
         await this.turnoService.cancelarTurno(turno.id, motivo);
         Swal.fire('Cancelado', 'El turno ha sido cancelado con éxito', 'success');
         // Actualiza el listado de turnos para el paciente y especialidad seleccionados
-        this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
+        this.horarios = []; 
+        await this.cargarTurnos(this.especialistaIniciado.uid);
+        this.cdr.detectChanges(); 
+        console.log(this.horarios);
+        //this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
       } catch (error) {
         Swal.fire('Error', 'No se pudo cancelar el turno', 'error');
       }
     }
   }
   
-
   async aceptarTurno(turno: any) {
     if (['Aceptado', 'Realizado', 'Rechazado'].includes(turno.estado)) {
       Swal.fire('Aviso', 'No se puede aceptar un turno ya aceptado, realizado o rechazado', 'info');
@@ -151,13 +167,19 @@ export class TurnosEspecialistaComponent {
         await this.turnoService.aceptarTurno(turno.id);
         Swal.fire('Aceptado', 'El turno ha sido aceptado con éxito', 'success');
   
-        // Actualiza el listado de turnos para el paciente y especialidad seleccionados
-        this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
+        // Actualiza el listado de turnos para el especialista
+        this.horarios = []; 
+        await this.cargarTurnos(this.especialistaIniciado.uid);
+        
+        // Forzar la detección de cambios para actualizar la vista
+        this.cdr.detectChanges(); 
+  
       } catch (error) {
         Swal.fire('Error', 'No se pudo aceptar el turno', 'error');
       }
     }
   }
+  
   
   async finalizarTurno(turno: any) {
     if (turno.estado !== 'aceptado') {
@@ -255,21 +277,25 @@ export class TurnosEspecialistaComponent {
         return;
       }
   
-      // Validar formato de la presión (Ejemplo: 120/80)
     
   
       try {
         // Llamar al método para actualizar el turno con el diagnóstico y reseña
-        await this.turnoService.finalizarTurno(turno.id, { diagnostico, reseña });
+        //await this.turnoService.finalizarTurno(turno.id, { diagnostico, reseña });
   
         // Llamar al método para registrar la historia clínica
-        await this.turnoService.finalizarTurnoHistoriaClinica(turno, { historiaClinica });
+        await this.turnoService.finalizarTurnoCompleto(turno.id, { diagnostico, reseña,historiaClinica });
   
         // Confirmación de que el turno ha sido finalizado
         Swal.fire('Finalizado', 'El turno ha sido finalizado con éxito', 'success');
         
         // Actualizar la vista del paciente seleccionado
-        this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
+        this.horarios = []; 
+        await this.cargarTurnos(this.especialistaIniciado.uid);
+        this.cdr.detectChanges(); 
+        console.log(this.horarios);
+
+        //this.onPacienteChange({ target: { value: this.pacienteSeleccionadoId } } as unknown as Event, { nombre: this.nombrePaciente });
       } catch (error) {
         // Manejo de errores
         Swal.fire('Error', 'No se pudo finalizar el turno', 'error');
@@ -298,37 +324,48 @@ export class TurnosEspecialistaComponent {
   
 
 async buscarTurnos() {
-  if (!this.filtroCampo || !this.filtroValor) {
-    Swal.fire('Error', 'Por favor, complete ambos campos de filtro.', 'error');
+  if (!this.filtroValor) {
+    Swal.fire('Error', 'Por favor, complete el campo de filtro.', 'error');
     return;
   }
 
   try {
     let turnosFiltrados;
+    console.log("Realizando búsqueda general");
+    turnosFiltrados = await this.turnoService.buscarTurnosPorValor(this.filtroValor);
 
-    // Verifica si el campo pertenece a la historia clínica
-    const camposHistoriaClinica = ['temperatura', 'altura', 'peso', 'presion'];
-    if (camposHistoriaClinica.includes(this.filtroCampo)) {
-      console.log("entro a la clinica");
-      // Filtrar turnos basados en la historia clínica
-      turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoClinica(
-        this.pacienteSeleccionadoId,
-        this.filtroCampo,
-        this.filtroValor
-      );
-    } else {
-      // Filtrar turnos en base a la colección de turnos
-      turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoTurnos(
-        this.pacienteSeleccionadoId,
-        this.filtroCampo,
-        this.filtroValor
-      );
-    }
+     // Filtra los turnos para que solo se muestren los del paciente actual
+    turnosFiltrados = turnosFiltrados.filter((turno: any) => turno.especialista_id === this.especialistaIniciado.uid);
 
-    // Mapea los resultados al formato necesario
-    this.horarios = Object.values(turnosFiltrados);
-    this.filtroCampo="";
-    this.filtroValor="";
+     // Mapear resultados al formato necesario
+     this.horarios = Object.values(turnosFiltrados);
+     this.filtroValor = "";
+
+    
+
+    // // Verifica si el campo pertenece a la historia clínica
+    // const camposHistoriaClinica = ['temperatura', 'altura', 'peso', 'presion'];
+    // if (camposHistoriaClinica.includes(this.filtroCampo)) {
+    //   console.log("entro a la clinica");
+    //   // Filtrar turnos basados en la historia clínica
+    //   turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoClinica(
+    //     this.pacienteSeleccionadoId,
+    //     this.filtroCampo,
+    //     this.filtroValor
+    //   );
+    // } else {
+    //   // Filtrar turnos en base a la colección de turnos
+    //   turnosFiltrados = await this.turnoService.filtrarTurnosPorCampoTurnos(
+    //     this.pacienteSeleccionadoId,
+    //     this.filtroCampo,
+    //     this.filtroValor
+    //   );
+    // }
+
+    // // Mapea los resultados al formato necesario
+    // this.horarios = Object.values(turnosFiltrados);
+    // this.filtroCampo="";
+    // this.filtroValor="";
 
   } catch (error) {
     console.error('Error al buscar turnos:', error);

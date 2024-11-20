@@ -53,6 +53,7 @@ input[type="text"] {
   font-size: 1rem;
   background-color: #f9f9f9;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+  width: 300px;
 }
 
 input[type="text"]:focus {
@@ -134,12 +135,12 @@ button {
   width: 100%;
 }
 
-button.realizado, button.encuesta, button.calificacion {
+button.realizado, button.encuesta, button.calificacion, button.aceptar, button.finalizar, button.buscar{
   margin-bottom: 5px;
   background-color: #b0e915;
 }
 
-button.realizado:hover, button.encuesta:hover, button.calificacion:hover {
+button.realizado:hover, button.encuesta:hover, button.calificacion:hover, button.aceptar:hover, button.finalizar:hover {
   background-color: #82b825;
   transform: scale(1.05);
 }

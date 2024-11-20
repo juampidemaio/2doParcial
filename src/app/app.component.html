@@ -12,10 +12,14 @@
   <a *ngIf="isEpecialista" class="nav-link" (click)="goTo('mis-horarios')" routerLinkActive="active-route">Mis Horarios</a>
 
   <a *ngIf="isPaciente" class="nav-link" (click)="goTo('/seccion-turnos/turnos-pacientes')" routerLinkActive="active-route">Mis Turnos</a>
+
+  <a *ngIf="isAdmin" class="nav-link" (click)="goTo('informes')">informes</a>
   
 
   <div class="nav-links-derecha">
     <a *ngIf="isAdmin" class="nav-link-encuesta" (click)="goTo('/usuarios/seccion-usuarios')">seccion usuarios</a>
+
+    
 
     <!-- <a *ngIf="isAdmin" class="nav-link-turno" (click)="goTo('/seccion-turnos/gestionar-horarios')">gestionar horarios</a> -->
 

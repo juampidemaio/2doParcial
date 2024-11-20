@@ -7,11 +7,13 @@ import { DetalleUsuariosComponent } from '../../modulos/usuarios/detalle-usuario
 import { UsuariosModule } from '../../modulos/usuarios/usuarios.module';
 import { TurnoService } from '../../servicios/turnos.service';
 import { jsPDF } from 'jspdf';
+import { EspecialistaService } from '../../servicios/especialista.service';
+import { FormatoValorPipe } from "../../pipes/formato-valor.pipe";
 
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule,FormsModule,UsuariosModule],
+  imports: [CommonModule, FormsModule, UsuariosModule, FormatoValorPipe],
   templateUrl: './mi-perfil.component.html',
   styleUrl: './mi-perfil.component.scss'
 })
@@ -21,18 +23,22 @@ export class MiPerfilComponent {
   esEspecialista: boolean = false;
   esAdministrador: boolean = false;
   historiaClinica: any;
-  turnos: { [key: string]: any } = {}; // Usamos un objeto con claves dinámicas
+  turnos: any[] = [];  // Usamos un array en lugar de un objeto
   mostrarHistoriaClinica: boolean = false; // Controla la visibilidad del historial
   historialVisible = false;
+  especialistas: any[] = [];
+  especialistaNombre:string ="";
 
 
   constructor(
     private authenticationService: AuthenticationService,
+    private especialistaService: EspecialistaService,
     private turnosService: TurnoService
   ) {}
 
   ngOnInit(): void {
     this.cargarUsuario();
+    this.cargarEspecialistas();
   }
 
   // Método para cargar los datos del usuario
@@ -48,12 +54,50 @@ export class MiPerfilComponent {
     });
   }
 
-  async obtenerHistoriaClinica(pacienteId: string) {
-    this.turnos = await this.turnosService.obtenerHistoriaClinica(pacienteId);
-    if (this.turnos) {
-      console.log(this.turnos);
+  async cargarEspecialistas() {
+    try {
+      this.especialistas = await this.especialistaService.getEspecialistas();
+      console.log("Especialistas cargados:", this.especialistas);
+    } catch (error) {
+      console.error("Error al cargar los especialistas:", error);
+      Swal.fire('Error', 'No se pudieron cargar los especialistas', 'error');
     }
   }
+
+  async obtenerHistoriaClinica(pacienteId: string) {
+    // Obtienes todos los turnos para el paciente
+    const turnos = await this.turnosService.obtenerHistoriaClinicaConTurnos(pacienteId);
+    
+    // Filtramos solo aquellos turnos que tienen historia clínica con valores reales
+    this.turnos = turnos.filter(turno => 
+      turno.historiaClinica.altura !== 'N/A' &&
+      turno.historiaClinica.peso !== 'N/A' &&
+      turno.historiaClinica.temperatura !== 'N/A' &&
+      turno.historiaClinica.presion !== 'N/A'
+    );
+    
+    if (this.turnos.length > 0) {
+      console.log('Turnos con historia clínica:', this.turnos);
+    } else {
+      console.log('No hay turnos con historia clínica.');
+    }
+  }
+
+  async filtrarPorEspecialista(especialista: any) {
+
+    this.turnos=[];
+    await this.obtenerHistoriaClinica(this.usuario.uid)
+
+    const nombreCompleto = `${especialista.nombre} ${especialista.apellido}`; // Concatenar nombre y apellido
+    this.especialistaNombre = nombreCompleto; // Guardar el nombre completo para mostrarlo
+    this.turnos = this.turnos.filter(turno => turno.especialista === nombreCompleto); // Filtrar turnos por nombre completo
+      if (this.turnos.length === 0) {
+        Swal.fire('Sin datos', 'No se encontraron turnos con este especialista.', 'info');
+      }
+  }
+  
+  
+  
   // Función que devuelve las claves del objeto
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
@@ -99,21 +143,20 @@ export class MiPerfilComponent {
       let y = 80;
     
       // Agregar información de cada turno
-      for (let key of this.objectKeys(this.turnos)) {
-        const turno = this.turnos[key];
-        
+      for (let turno of this.turnos) {
+
         doc.setFontSize(14);
         doc.text(`Turno de ${turno.especialidad}`, 10, y);
         doc.setFontSize(12);
         y += 10;
     
         doc.text(`Especialidad: ${turno.especialidad}`, 10, y);
-        doc.text(`Especialista: ${turno.nombreEspecialista}`, 10, y + 10);
-        doc.text(`Fecha: ${turno.fechaTurno}`, 10, y + 20);
-        doc.text(`Altura: ${turno.altura} cm`, 10, y + 30);
-        doc.text(`Peso: ${turno.peso} kg`, 10, y + 40);
-        doc.text(`Temperatura: ${turno.temperatura} °C`, 10, y + 50);
-        doc.text(`Presión: ${turno.presion} mmHg`, 10, y + 60);
+        doc.text(`Especialista: ${turno.especialista}`, 10, y + 10);
+        doc.text(`Fecha: ${turno.fecha}`, 10, y + 20);
+        doc.text(`Altura: ${turno.historiaClinica.altura} cm`, 10, y + 30);
+        doc.text(`Peso: ${turno.historiaClinica.peso} kg`, 10, y + 40);
+        doc.text(`Temperatura: ${ turno.historiaClinica.temperatura} °C`, 10, y + 50);
+        doc.text(`Presión: ${turno.historiaClinica.presion} mmHg`, 10, y + 60);
         y += 70;
     
         // Datos dinámicos
@@ -121,7 +164,9 @@ export class MiPerfilComponent {
           doc.text('Otros Datos:', 10, y);
           y += 10;
     
-          turno.datosDinamicos.forEach((dato: any) => {
+          for (let dato of turno.historiaClinica.datosDinamicos)
+          {
+            
             doc.text(`${dato.clave}: ${dato.valor}`, 10, y);
             y += 10;
     
@@ -129,7 +174,8 @@ export class MiPerfilComponent {
               doc.addPage();
               y = 10;
             }
-          });
+          }
+          
         }
     
         y += 10;

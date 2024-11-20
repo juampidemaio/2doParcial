@@ -1,0 +1,101 @@
+<div class="button-container">
+    <button (click)="showGraph('turnosSolicitados')" [class.active]="currentGraph === 'turnosSolicitados'">Turnos Solicitados</button>
+    <button (click)="showGraph('turnosFinalizados')" [class.active]="currentGraph === 'turnosFinalizados'">Turnos Finalizados</button>
+    <button (click)="showGraph('turnosPorEspecialidad')" [class.active]="currentGraph === 'turnosPorEspecialidad'">Turnos por Especialidad</button>
+    <button (click)="showGraph('turnosPorFecha')" [class.active]="currentGraph === 'turnosPorFecha'">Turnos por Fecha</button>
+    <button (click)="toggleLogs()" [class.active]="showLogs">Log de Ingresos</button>
+  </div>
+  <div class="filters" *ngIf="currentGraph === 'turnosSolicitados' || currentGraph === 'turnosFinalizados'">
+    <label for="startDate">Fecha Inicio:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate" (change)="validateInputs()">
+    
+    <label for="endDate">Fecha Fin:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate" (change)="validateInputs()">
+    
+    <label for="startTime">Hora Inicio:</label>
+    <input type="time" id="startTime" [(ngModel)]="startTime">
+    
+    <label for="endTime">Hora Fin:</label>
+    <input type="time" id="endTime" [(ngModel)]="endTime">
+    
+    <button (click)="buscarTurnos()">Buscar Turnos</button>
+  </div>
+  
+  
+  
+
+  <!-- Contenido de los gráficos -->
+  <div *ngIf="!showLogs">
+    <div *ngIf="currentGraph === 'turnosSolicitados'" class="chart-container" #turnosChart>
+      <h3>Cantidad de Turnos Solicitados</h3>
+      <div class="bar-chart">
+        <div *ngFor="let turno of turnosSolicitados" class="bar" [style.height]="(turno.cantidadTurnos * 15) + 'px'" [appHighlightBar]="turno.cantidadTurnos">
+          <span>{{ turno.cantidadTurnos }}</span>
+          <div class="bar-label">{{ turno.especialista | capitalize }}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="currentGraph === 'turnosFinalizados'" class="chart-container" #turnosChart>
+      <h3>Cantidad de Turnos Finalizados</h3>
+      <div class="bar-chart">
+        <div *ngFor="let turno of turnosFinalizados" class="bar"  class="bar" [style.height]="(turno.cantidadTurnos * 15) + 'px'" [appHighlightBar]="turno.cantidadTurnos">
+          <span>{{ turno.cantidadTurnos }}</span>
+          <div class="bar-label">{{ turno.especialista | capitalize }}</div>
+
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="currentGraph === 'turnosPorEspecialidad'" class="chart-container" #turnosChart>
+      <h3>Cantidad de Turnos por Especialidad</h3>
+      <div class="bar-chart">
+        <div *ngFor="let especialidad of turnosPorEspecialidad" class="bar"  class="bar" [style.height]="(especialidad.cantidadTurnos * 15) + 'px'" [appHighlightBar]="especialidad.cantidadTurnos">
+          <span>{{ especialidad.cantidadTurnos }}</span>
+          <div class="bar-label">{{ especialidad.especialidad | capitalize  }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="currentGraph === 'turnosPorFecha'" class="chart-container" #turnosChart>
+      <h3>Cantidad de Turnos por Fecha</h3>
+      <div class="bar-chart">
+        <div *ngFor="let turno of turnosPorFecha" class="bar"  class="bar" [style.height]="(turno.cantidadTurnos * 15) + 'px'" [appHighlightBar]="turno.cantidadTurnos">
+          <span>{{ turno.cantidadTurnos }}</span>
+          <div class="bar-label">{{ turno.fecha }}</div>
+        </div>
+      </div>
+    </div>
+  
+   <!-- Botones de descarga de gráfico -->
+  <!-- Botones de descarga para logs -->
+  <div class="download-buttons">
+    <button class="download-btn download-pdf" (click)="downloadPDF(turnosChartRef.nativeElement)">Descargar PDF</button>
+    <button class="download-btn download-excel" (click)="downloadExcel()">Descargar Excel</button>
+  </div>
+</div>
+
+<div *ngIf="showLogs" class="log-container">
+  <h3>Log de Ingresos al Sistema</h3>
+  <table class="log-table" #logsTable [appAlternarEstilo]="{ odd: '#e0f7fa', even: '#eeeeee' }">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Fecha y Hora</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let login of logins">
+        <td>{{ login.user }}</td>
+        <td>{{ login.fecha ? (login.fecha | formatDate) : 'Sin fecha' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Botones de descarga para logs -->
+  <div class="download-buttons">
+    <button class="download-btn download-pdf" (click)="downloadLogsPDF()">Descargar Log PDF</button>
+    <button class="download-btn download-excel" (click)="downloadLogsExcel()">Descargar Log Excel</button>
+  </div>
+</div>
+  

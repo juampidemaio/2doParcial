@@ -181,4 +181,76 @@ h2 {
       background-color: #ffffff;
     }
   
+    .pacientes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;  /* Espacio entre los FABs */
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .paciente-card {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .fab-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 300px;  /* Tamaño del FAB */
+      height: 300px;
+      border-radius: 50%;  /* Hace el botón circular */
+      background-color: #a8e7aa; /* Color de fondo del botón */
+      border: none;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      padding: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    
+    .fab-button:hover {
+      transform: scale(1.05);  /* Efecto de aumento al pasar el mouse */
+    }
+    
+    .paciente-imagen {
+      width: 120px;  /* Tamaño de la imagen dentro del botón */
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;  /* Espacio entre la imagen y el nombre */
+    }
+    
+    .fab-button h4 {
+      color: white;
+      font-size: 18px;
+      text-transform: capitalize;
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    
   
+  button {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+  }
+    
+button.realizado{
+  margin-bottom: 5px;
+  background-color: #b0e915;
+}
+
+button.realizado:hover{
+  background-color: #82b825;
+  transform: scale(1.05);
+}

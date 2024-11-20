@@ -12,7 +12,7 @@ import { TurnoService } from '../../../servicios/turnos.service';
 export class SeccionPacientesComponent {
   pacientesAtendidos: any[] = []; // Lista de pacientes atendidos
   pacienteSeleccionado: any = null; // Paciente seleccionado
-  turnos: { [key: string]: any } = {}; // Historial del paciente seleccionado
+  turnos: any[] = [];  // Usamos un array en lugar de un objeto
   historialVisible: boolean = false; // Control de visibilidad del historial
   usuario:any;
 
@@ -61,13 +61,45 @@ export class SeccionPacientesComponent {
     }
   }
 
-  // Método para obtener la historia clínica del paciente seleccionado
   async obtenerHistoriaClinica(pacienteId: string) {
-    this.turnos = await this.turnosService.obtenerHistoriaClinica(pacienteId);
+    const turnos = await this.turnosService.obtenerHistoriaClinicaConTurnos(pacienteId);
+    
+    this.turnos = turnos.filter(turno => 
+      turno.historiaClinica.altura !== 'N/A' &&
+      turno.historiaClinica.peso !== 'N/A' &&
+      turno.historiaClinica.temperatura !== 'N/A' &&
+      turno.historiaClinica.presion !== 'N/A'
+    ).filter(turno => turno.especialista_id === this.usuario.uid); // Filtra por especialista
+  
+    console.log(this.turnos, "quiero ver su especialista id a ver si lo trae");
+  
+    if (this.turnos.length > 0) {
+      console.log('Turnos con historia clínica:', this.turnos);
+    } else {
+      console.log('No hay turnos con historia clínica.');
+    }
+  }
+  
+  async verResenaTurno(turno: any) {
+    if (turno.estado !== 'realizado') {
+      Swal.fire('Aviso', 'Solo puedes ver la reseña de un turno realizado', 'info');
+      return;
+    }
+    
+    try {
+      // Llamamos al servicio para obtener la reseña del turno
+      Swal.fire('Reseña del Turno', turno.reseña, 'info');
+    } catch (error) {
+      console.error('Error al obtener reseña:', error);
+      Swal.fire('Error', 'No se pudo obtener la reseña', 'error');
+    }
   }
 
-  // Función para obtener las claves del objeto turnos
-  objectKeys(obj: any): string[] {
-    return Object.keys(obj);
-  }
+  // toggleFavorito(event: Event, paciente: any): void {
+  //   event.stopPropagation(); // Evita que se dispare el evento 'click' en el card
+  //   paciente.favorito = !paciente.favorito; // Alterna el estado de favorito
+  //   console.log(`Paciente ${paciente.nombre} ${paciente.favorito ? 'añadido a favoritos' : 'removido de favoritos'}`);
+  // }
+  
+
 }

@@ -80,8 +80,9 @@ export class SolicitarTurnoComponent {
   }
 
   async setPacienteData(usuario: any) {
-    this.usuarioSeleccionado = usuario; // Método para manejar la selección de un usuario
+    this.usuarioSeleccionado = usuario; // Maneja la selección del usuario
     if (usuario) {
+      // Solo actualiza los valores del formulario, sin llamar a 'solicitarTurno'
       this.turnoForm.patchValue({
         paciente: usuario.nombre,
         dni: usuario.dni,
@@ -90,9 +91,12 @@ export class SolicitarTurnoComponent {
       });
     }
   }
+  
 
   async onEspecialistaChange(especialista: any) {
     this.idEspecialista = especialista.uid;  // Ahora el id está disponible desde el objeto especialista
+    this.diasDisponibles =[];
+    this.horarios = [];
 
     console.log("ID del especialista seleccionado:", this.idEspecialista);
 

@@ -1,33 +1,26 @@
 <h2>Listado de Especialistas</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Email</th>
-      <th>Rol</th>
-      <th>Estado</th>
-      <th>Cambiar Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let usuario of usuarios" (click)="seleccionarUsuario(usuario)">
-      <td>{{ usuario.nombre }}</td>
-      <td>{{ usuario.apellido }}</td>
-      <td>{{ usuario.email }}</td>
-      <td>{{ usuario.role }}</td>
-      <td [ngClass]="{ 'habilitado': usuario.habilitado, 'inhabilitado': !usuario.habilitado }">
-        {{ usuario.habilitado ? 'Habilitado' : 'Inhabilitado' }}
-      </td>
-      <td>
-        <button 
-          *ngIf="usuario.role === 'especialista'" 
-          [ngClass]="{ 'inhabilitar': usuario.habilitado, 'habilitar': !usuario.habilitado }" 
-          (click)="alternarEstadoUsuario(usuario)">
-          {{ usuario.habilitado ? 'Inhabilitar' : 'Habilitar' }}
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="especialistas-grid">
+  <div *ngFor="let especialista of especialistas" class="especialista-card">
+    <button class="fab-button" (click)="seleccionarUsuario(especialista)">
+      <img 
+        [src]="especialista.imageUrl || 'assets/default-user.png'" 
+        alt="Especialista" 
+        class="especialista-imagen" 
+      />
+      <h4>{{ especialista.nombre }} {{ especialista.apellido }}</h4>
+      <p>{{ especialista.email }}</p>
+      <p [ngClass]="{ 'habilitado': especialista.habilitado, 'inhabilitado': !especialista.habilitado }">
+        {{ especialista.habilitado ? 'Habilitado' : 'Inhabilitado' }}
+      </p>
+    </button>
+    <button 
+      *ngIf="especialista.role === 'especialista'" 
+      [appPermisos]="usuarioActual.role" 
+      [rolPermitido]="'administrador'" 
+      [ngClass]="{ 'inhabilitar': especialista.habilitado, 'habilitar': !especialista.habilitado }" 
+      (click)="alternarEstadoUsuario(especialista)">
+      {{ especialista.habilitado ? 'Inhabilitar' : 'Habilitar' }}
+    </button>
+  </div>
+</div>

@@ -59,4 +59,98 @@ td.inhabilitado {
   font-weight: bold;
 }
 
+.administrador-grid {
+  display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  /* Espacio entre los FABs */
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-card {
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilo del botón circular */
+.fab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 270px;  /* Tamaño del FAB */
+  height: 270px;
+  border-radius: 50%;  /* Hace el botón circular */
+  background-color: #a8e7aa; /* Color de fondo del botón */
+  border: none;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  padding: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+/* Imagen del admin */
+.admin-imagen {
+  width: 120px;  /* Tamaño de la imagen dentro del botón */
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;  /* Espacio entre la imagen y el nombre */
+}
+
+/* Títulos y descripciones */
+h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+p {
+  margin: 5px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Colores de estado habilitado o inhabilitado */
+.habilitado {
+  color: green;
+}
+
+.inhabilitado {
+  color: red;
+}
+
+/* Estilos para el contenedor de habilitar/inhabilitar */
+// .habilitar-container {
+//   margin-top: 10px;  /* Separa del botón circular */
+//   display: flex;
+//   justify-content: center;
+// }
+
+/* Botón pequeño para habilitar/inhabilitar */
+button {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button.habilitar {
+  background-color: #4caf50;  /* Verde */
+  color: white;
+}
+
+.button.inhabilitar {
+  background-color: #f44336;  /* Rojo */
+  color: white;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
   

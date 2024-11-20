@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ExcelService } from '../../../servicios/excel.service';
 import { trigger, transition, style, animate, keyframes } from '@angular/animations';
+import { TurnoService } from '../../../servicios/turnos.service';
+import { AuthenticationService } from '../../../servicios/authentication.service';
 
 @Component({
   selector: 'app-seccion-usuarios',
@@ -22,8 +24,9 @@ export class SeccionUsuariosComponent {
   listadoSeleccionado: string | null = "paciente"; // Guardará el listado seleccionado
   usuarioSeleccionado: any = null; // Aquí almacenarás el usuario seleccionado
   usuarios: any[] = []; // Lista de usuarios a exportar (rellénala con datos reales)
+click: any;
 
-  constructor(private excelService: ExcelService) {}
+  constructor(private excelService: ExcelService, private turnoService : TurnoService, private authenticationService: AuthenticationService) {}
 
  
 
@@ -46,35 +49,96 @@ export class SeccionUsuariosComponent {
     this.usuarioSeleccionado = usuario; // Método para manejar la selección de un usuario
   }
 
-  exportarUsuarios() {
+  async exportarUsuarioSeleccionado() {
     if (this.usuarioSeleccionado) {
       const usuario = this.usuarioSeleccionado;
+      let turnos = [];
+      let turnosData: { Fecha: any; Hora: string; Paciente: any; Especialidad: any; Especialista: any; }[] = [];
   
-      // Prepara los datos para el Excel, excluyendo campos vacíos
-      const data = [
-        Object.entries({
-          Nombre: usuario.nombre,
-          Apellido: usuario.apellido,
-          Edad: usuario.edad,
-          DNI: usuario.dni,
-          Email: usuario.email,
-          ObraSocial: usuario.obraSocial,
-          Especialidades: usuario.especialidades ? usuario.especialidades.join(", ") : null,
-        })
-          .filter(([_, value]) => value !== null && value !== undefined && value !== "")
-          .reduce<Record<string, string | number>>((acc, [key, value]) => {
-            acc[key] = value;
-            return acc;
-          }, {})
+      try {
+        if (usuario.role === "especialista") {
+          turnos = await this.turnoService.obtenerTurnosExcelEspecialistas(usuario);
+        } else if (usuario.role === "paciente") {
+          turnos = await this.turnoService.obtenerTurnosExcelPacientes(usuario);
+        }
+  
+        // Mapea los turnos solo si se obtuvieron
+        turnosData = turnos.map(turno => ({
+          Fecha: turno.fecha,
+          Hora: `${turno.horaInicio} - ${turno.horaFin}`,
+          Paciente: turno.paciente || "-",
+          Especialidad: turno.especialidad,
+          Especialista: turno.especialista,
+        }));
+      } catch (error) {
+        console.error(`Error al obtener turnos para ${usuario.role}:`, error);
+        turnosData = []; // Asegurarse de que sea un array vacío si hay error
+      }
+  
+      // Datos del usuario
+  
+  
+      // Combina los datos de usuario con los turnos
+      const combinedData = [
+        { Título: "Turnos" },
+        ...turnosData,
       ];
   
       // Define el nombre del archivo
       const fileName = `Detalles_${usuario.nombre}_${usuario.apellido}`;
   
-      // Llamada al servicio de Excel
-      this.excelService.exportToExcel(data, fileName);
+      // Llamada al servicio para exportar a Excel
+      this.excelService.exportToExcel(combinedData, fileName);
     }
   }
+  
+  async exportarTodosLosUsuarios() {
+    try {
+      // Obtener todos los usuarios
+      const usuarios = await this.authenticationService.obtenerUsuarios();
+  
+      // Array para almacenar todos los datos combinados
+      const combinedData = [];
+  
+      for (const usuario of usuarios) {
+        let usuarioData: Record<string, any> = {
+          Nombre: usuario.nombre,
+          Apellido: usuario.apellido,
+          DNI: usuario.dni,
+          Edad: usuario.edad,
+          Email: usuario.email,
+          Rol: usuario.role,
+        };
+  
+        // Agregar campos específicos según el rol
+        switch (usuario.role) {
+          case 'paciente':
+            usuarioData['Obra Social'] = usuario.obraSocial;
+            break;
+          case 'especialista':
+            usuarioData['Especialidades'] = usuario.especialidades ? usuario.especialidades.join(", ") : 'N/A';
+            break;
+          // El administrador no requiere campos adicionales
+          default:
+            break;
+        }
+  
+        // Agregar los datos al archivo combinado
+        combinedData.push(usuarioData);
+        combinedData.push({}); // Línea vacía para separar usuarios
+        combinedData.push({}); // Línea vacía para separar usuarios
+      }
+  
+      // Exportar a Excel
+      this.excelService.exportToExcel(combinedData, 'Listado_Usuarios');
+    } catch (error) {
+      console.error('Error al exportar usuarios:', error);
+    }
+  }
+  
+  
+  
+  
   
   
 }

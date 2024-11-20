@@ -8,13 +8,10 @@ import { TurnoService } from '../../../servicios/turnos.service';
   styleUrl: './detalle-usuarios.component.scss'
 })
 export class DetalleUsuariosComponent {
-  @Input() usuario: any;
+   @Input() usuario: any;
   historiaClinica: any;
-  turnos: { [key: string]: any } = {}; // Usamos un objeto con claves dinámicas
-  mostrarHistoriaClinica: boolean = false; // Controla la visibilidad del historial
+  turnos: any[] = [];  // Usamos un array en lugar de un objeto
   historialVisible = false;
-
-
 
   constructor(private turnosService: TurnoService) {}
 
@@ -25,20 +22,35 @@ export class DetalleUsuariosComponent {
   }
 
   async obtenerHistoriaClinica(pacienteId: string) {
-    this.turnos = await this.turnosService.obtenerHistoriaClinica(pacienteId);
-    if (this.turnos) {
-      console.log(this.turnos);
+    this.turnos =[];
+    // Obtienes todos los turnos para el paciente
+    const turnos = await this.turnosService.obtenerHistoriaClinicaConTurnos(pacienteId);
+    
+    // Filtramos solo aquellos turnos que tienen historia clínica con valores reales
+    this.turnos = turnos.filter(turno => 
+      turno.historiaClinica.altura !== 'N/A' &&
+      turno.historiaClinica.peso !== 'N/A' &&
+      turno.historiaClinica.temperatura !== 'N/A' &&
+      turno.historiaClinica.presion !== 'N/A' 
+    );
+    
+    if (this.turnos.length > 0) {
+      console.log('Turnos con historia clínica:', this.turnos);
+    } else {
+      console.log('No hay turnos con historia clínica.');
     }
-  }
-
-   // Función que devuelve las claves del objeto
-   objectKeys(obj: any): string[] {
-    return Object.keys(obj);
   }
 
   toggleHistoriaClinica() {
     this.historialVisible = !this.historialVisible;
-    this.obtenerHistoriaClinica(this.usuario.uid);
+
+    if(this.historialVisible === true)
+    {
+      this.obtenerHistoriaClinica(this.usuario.uid);
+    }
+    else{
+      this.turnos = [];
+    }
   }
 
   get esPaciente() {
@@ -54,6 +66,6 @@ export class DetalleUsuariosComponent {
   }
 
   get textoBotonHistoriaClinica() {
-    return this.mostrarHistoriaClinica ? 'Ocultar Historia Clínica' : 'Mostrar Historia Clínica';
+    return this.historialVisible ? 'Ocultar Historia Clínica' : 'Mostrar Historia Clínica';
   }
 }

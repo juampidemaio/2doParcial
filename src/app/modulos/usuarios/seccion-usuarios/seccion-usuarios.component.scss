@@ -65,10 +65,11 @@ button.active {
   display: flex; /* Usamos flexbox para alinear el botón */
   justify-content: center; /* Centra el botón horizontalmente */
   margin-top: 1rem; /* Espacio superior entre el listado y el botón */
+  margin-bottom: 1.3rem; /* Espacio superior entre el listado y el botón */
 }
 
 /* Estilos generales del botón, si no lo has hecho ya */
-#boton-registro {
+#boton-registro, .download-button{
   padding: 0.5rem 1rem; /* Espaciado interno */
   border: none; /* Sin borde */
   border-radius: 4px; /* Bordes redondeados */
@@ -78,7 +79,11 @@ button.active {
   cursor: pointer; /* Cursor de puntero para indicar que es clickeable */
   transition: background-color 0.3s ease; /* Efecto de transición al cambiar el color */
 }
-
+.download-button
+{
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
 #boton-registro:hover {
   background-color: #145A32; /* Color al pasar el ratón */
 }

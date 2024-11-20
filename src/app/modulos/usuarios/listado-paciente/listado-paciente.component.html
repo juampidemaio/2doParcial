@@ -1,5 +1,24 @@
 <h2>Listado de Pacientes</h2>
 
+<div *ngIf="usuarioIniciado.role === 'administrador'">
+  <div class="pacientes-grid">
+    <div *ngFor="let paciente of usuarios" class="paciente-card">
+      <button class="fab-button" (click)="seleccionarUsuario(paciente)">
+        <img 
+          [src]="paciente.imagenes[0]" 
+          alt="paciente" 
+          class="paciente-imagen" 
+        />
+        <h4>{{ paciente.nombre }} {{ paciente.apellido }}</h4>
+        <p>{{ paciente.email }}</p>
+        <p [ngClass]="{ 'habilitado': paciente.habilitado, 'inhabilitado': !paciente.habilitado }">
+          {{ paciente.habilitado ? 'Habilitado' : 'Inhabilitado' }}
+        </p>
+      </button>
+  </div>
+</div>
+
+<!-- 
 <table>
   <thead>
     <tr>
@@ -22,4 +41,4 @@
 
     </tr>
   </tbody>
-</table>
+</table> -->
