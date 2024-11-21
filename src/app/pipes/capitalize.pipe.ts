@@ -7,7 +7,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CapitalizePipe implements PipeTransform {
   transform(value: string): string {
     return value
-      ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+      ? value
+          .split(' ') // Divide el string en palabras
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitaliza cada palabra
+          .join(' ') // Une las palabras nuevamente con un espacio
       : '';
   }
 }

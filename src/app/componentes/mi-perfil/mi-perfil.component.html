@@ -17,7 +17,7 @@
 
     <div *ngIf="esEspecialista" class="especialista">
       <p><strong>Especialidades:</strong></p>
-      <p>{{ usuario.especialidad | formatoValor:'Sin valor' }}</p>
+      <!-- <p>{{ usuario.especialidad | formatoValor:'Sin valor' }}</p> -->
       <ul>
         <li *ngFor="let especialidad of usuario.especialidades">{{ especialidad | formatoValor:'Sin valor' }}</li>
       </ul>

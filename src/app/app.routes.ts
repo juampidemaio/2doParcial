@@ -10,7 +10,7 @@ export const routes: Routes = [
     { path: 'bienvenida', component: BienvenidaComponent, data: { animation: 'BienvenidaPage' } },
     { path: 'mi-perfil', component: MiPerfilComponent, data: { animation: 'MiPerfilPage' } },
     { path: 'mis-horarios', component: MisHorariosComponent, data: { animation: 'MisHorariosPage' } },
-    { path: 'informes', component: GraficosComponent },
+    { path: 'informes', component: GraficosComponent,canActivate: [AdminGuard] },
     { 
         path:"authentication",
         loadChildren: () => import('./modulos/authentication-module/authentication-module.module').then(m => m.authenticationModuleModule)
